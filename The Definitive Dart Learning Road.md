@@ -1361,23 +1361,1564 @@ void processHttpStatusCode(int statusCode) {
 ```
 
 ### **Module 4: Collections (Grouping Data)**
+
 * **Topic 4.1: Lists**
     * [ ] Creating and manipulating ordered lists of items
+
+#### Creating and Manipulating Lists
+
+Lists are ordered collections of items that can contain duplicates. They are one of the most commonly used data structures in Dart.
+
+**Creating lists:**
+```dart
+void main() {
+  // Creating lists with different approaches
+  List<String> fruits = ['apple', 'banana', 'orange'];
+  List<int> numbers = [1, 2, 3, 4, 5];
+  List<double> prices = [10.99, 25.50, 5.75];
+  
+  // Creating an empty list
+  List<String> emptyList = [];
+  List<String> emptyList2 = <String>[];
+  List<String> emptyList3 = List<String>.empty(growable: true);
+  
+  // Creating list with initial values
+  List<int> filledList = List.filled(5, 0); // [0, 0, 0, 0, 0]
+  List<int> generatedList = List.generate(5, (index) => index + 1); // [1, 2, 3, 4, 5]
+  
+  print('Fruits: $fruits');
+  print('Numbers: $numbers');
+  print('Prices: $prices');
+  print('Filled list: $filledList');
+  print('Generated list: $generatedList');
+}
+```
+
+**Accessing list elements:**
+```dart
+void main() {
+  List<String> colors = ['red', 'green', 'blue', 'yellow', 'purple'];
+  
+  // Accessing by index (0-based)
+  print('First color: ${colors[0]}');
+  print('Third color: ${colors[2]}');
+  print('Last color: ${colors[colors.length - 1]}');
+  
+  // Safe access methods
+  print('First color (safe): ${colors.first}');
+  print('Last color (safe): ${colors.last}');
+  
+  // Get element at index with default value
+  print('Element at index 10: ${colors.elementAtOrNull(10) ?? 'Not found'}');
+  
+  // List properties
+  print('List length: ${colors.length}');
+  print('Is empty: ${colors.isEmpty}');
+  print('Is not empty: ${colors.isNotEmpty}');
+}
+
+// Extension method for safe element access (Dart 3.0+)
+extension SafeList<T> on List<T> {
+  T? elementAtOrNull(int index) {
+    if (index >= 0 && index < length) {
+      return this[index];
+    }
+    return null;
+  }
+}
+```
+
+**Adding and removing elements:**
+```dart
+void main() {
+  List<String> shoppingCart = ['milk', 'bread'];
+  
+  print('Initial cart: $shoppingCart');
+  
+  // Adding elements
+  shoppingCart.add('eggs');                    // Add single item
+  shoppingCart.addAll(['butter', 'cheese']);   // Add multiple items
+  shoppingCart.insert(1, 'yogurt');           // Insert at specific position
+  shoppingCart.insertAll(0, ['fruits', 'vegetables']); // Insert multiple at position
+  
+  print('After adding: $shoppingCart');
+  
+  // Removing elements
+  shoppingCart.remove('bread');               // Remove first occurrence
+  shoppingCart.removeAt(0);                  // Remove at specific index
+  String removed = shoppingCart.removeLast(); // Remove and return last element
+  shoppingCart.removeWhere((item) => item.startsWith('v')); // Remove by condition
+  
+  print('After removing: $shoppingCart');
+  print('Removed item: $removed');
+  
+  // Clear all elements
+  List<String> tempList = ['a', 'b', 'c'];
+  tempList.clear();
+  print('Cleared list: $tempList');
+}
+```
+
+**List operations and methods:**
+```dart
+void main() {
+  List<int> numbers = [1, 2, 3, 4, 5, 3, 2, 1];
+  
+  // Searching
+  print('Contains 3: ${numbers.contains(3)}');
+  print('Index of 3: ${numbers.indexOf(3)}');
+  print('Last index of 3: ${numbers.lastIndexOf(3)}');
+  
+  // Sublist operations
+  List<int> subList = numbers.sublist(1, 4); // [2, 3, 4]
+  print('Sublist (1 to 4): $subList');
+  
+  // Reversing
+  List<int> reversed = numbers.reversed.toList();
+  print('Reversed: $reversed');
+  
+  // Sorting
+  List<String> names = ['Charlie', 'Alice', 'Bob', 'Diana'];
+  names.sort(); // Sorts in place
+  print('Sorted names: $names');
+  
+  List<int> scores = [85, 92, 78, 96, 88];
+  scores.sort((a, b) => b.compareTo(a)); // Sort descending
+  print('Sorted scores (desc): $scores');
+  
+  // Joining
+  String joined = names.join(', ');
+  print('Joined names: $joined');
+}
+```
+
+**Advanced list operations:**
+```dart
+void main() {
+  List<int> numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  
+  // Filtering
+  List<int> evenNumbers = numbers.where((n) => n % 2 == 0).toList();
+  print('Even numbers: $evenNumbers');
+  
+  // Mapping (transforming)
+  List<int> squared = numbers.map((n) => n * n).toList();
+  print('Squared numbers: $squared');
+  
+  // Reducing
+  int sum = numbers.reduce((a, b) => a + b);
+  print('Sum: $sum');
+  
+  // Folding
+  int product = numbers.fold(1, (prev, current) => prev * current);
+  print('Product: $product');
+  
+  // Any and every
+  bool hasEven = numbers.any((n) => n % 2 == 0);
+  bool allPositive = numbers.every((n) => n > 0);
+  print('Has even number: $hasEven');
+  print('All positive: $allPositive');
+  
+  // Take and skip
+  List<int> firstThree = numbers.take(3).toList();
+  List<int> skipFirstTwo = numbers.skip(2).toList();
+  print('First three: $firstThree');
+  print('Skip first two: $skipFirstTwo');
+}
+```
+
 * **Topic 4.2: Sets**
     * [ ] Working with unordered collections of unique items
+
+#### Working with Sets
+
+Sets are unordered collections that contain only unique elements. They're perfect when you need to ensure no duplicates.
+
+**Creating sets:**
+```dart
+void main() {
+  // Creating sets with different approaches
+  Set<String> colors = {'red', 'green', 'blue'};
+  Set<int> numbers = {1, 2, 3, 4, 5};
+  
+  // Creating empty sets
+  Set<String> emptySet = <String>{};
+  Set<String> emptySet2 = Set<String>();
+  
+  // Creating set from list (removes duplicates)
+  List<int> duplicateNumbers = [1, 2, 2, 3, 3, 3, 4, 5];
+  Set<int> uniqueNumbers = duplicateNumbers.toSet();
+  
+  print('Colors: $colors');
+  print('Numbers: $numbers');
+  print('Unique numbers: $uniqueNumbers');
+  print('Empty set: $emptySet');
+}
+```
+
+**Set operations:**
+```dart
+void main() {
+  Set<String> fruits = {'apple', 'banana', 'orange'};
+  
+  print('Initial fruits: $fruits');
+  
+  // Adding elements
+  fruits.add('grape');
+  fruits.addAll(['kiwi', 'mango']);
+  print('After adding: $fruits');
+  
+  // Try adding duplicate (won't be added)
+  bool added = fruits.add('apple'); // Returns false
+  print('Added apple again: $added');
+  print('Fruits after duplicate add: $fruits');
+  
+  // Removing elements
+  fruits.remove('banana');
+  print('After removing banana: $fruits');
+  
+  // Set properties
+  print('Number of fruits: ${fruits.length}');
+  print('Contains apple: ${fruits.contains('apple')}');
+  print('Is empty: ${fruits.isEmpty}');
+}
+```
+
+**Set mathematical operations:**
+```dart
+void main() {
+  Set<int> setA = {1, 2, 3, 4, 5};
+  Set<int> setB = {4, 5, 6, 7, 8};
+  
+  print('Set A: $setA');
+  print('Set B: $setB');
+  
+  // Union (all elements from both sets)
+  Set<int> union = setA.union(setB);
+  print('Union: $union');
+  
+  // Intersection (common elements)
+  Set<int> intersection = setA.intersection(setB);
+  print('Intersection: $intersection');
+  
+  // Difference (elements in A but not in B)
+  Set<int> difference = setA.difference(setB);
+  print('Difference (A - B): $difference');
+  
+  // Symmetric difference (elements in either set, but not both)
+  Set<int> symmetricDifference = setA.union(setB).difference(setA.intersection(setB));
+  print('Symmetric difference: $symmetricDifference');
+  
+  // Check subset/superset relationships
+  Set<int> subset = {2, 3};
+  print('Is {2, 3} subset of A: ${subset.every((element) => setA.contains(element))}');
+}
+```
+
+**Practical set examples:**
+```dart
+void main() {
+  // User permissions system
+  Set<String> adminPermissions = {'read', 'write', 'delete', 'admin'};
+  Set<String> userPermissions = {'read', 'write'};
+  Set<String> guestPermissions = {'read'};
+  
+  print('Admin permissions: $adminPermissions');
+  print('User permissions: $userPermissions');
+  print('Guest permissions: $guestPermissions');
+  
+  // Check if user can delete
+  bool canDelete = userPermissions.contains('delete');
+  print('User can delete: $canDelete');
+  
+  // Find what additional permissions user needs to become admin
+  Set<String> additionalNeeded = adminPermissions.difference(userPermissions);
+  print('Additional permissions needed: $additionalNeeded');
+  
+  // Unique visitors tracking
+  Set<String> dailyVisitors = {'user1', 'user2', 'user3'};
+  Set<String> weeklyVisitors = {'user1', 'user4', 'user5'};
+  
+  // All unique visitors this week
+  Set<String> allVisitors = dailyVisitors.union(weeklyVisitors);
+  print('All unique visitors: $allVisitors');
+  
+  // Returning visitors
+  Set<String> returningVisitors = dailyVisitors.intersection(weeklyVisitors);
+  print('Returning visitors: $returningVisitors');
+}
+```
+
 * **Topic 4.3: Maps**
     * [ ] Using key-value pairs to store data
+
+#### Using Key-Value Pairs with Maps
+
+Maps store data as key-value pairs, where each key is unique and maps to a specific value.
+
+**Creating maps:**
+```dart
+void main() {
+  // Creating maps with different approaches
+  Map<String, int> ages = {
+    'Alice': 25,
+    'Bob': 30,
+    'Charlie': 22
+  };
+  
+  Map<String, double> prices = {
+    'coffee': 4.50,
+    'tea': 3.25,
+    'sandwich': 8.99
+  };
+  
+  // Creating empty maps
+  Map<String, String> emptyMap = {};
+  Map<String, String> emptyMap2 = <String, String>{};
+  Map<String, String> emptyMap3 = Map<String, String>();
+  
+  // Creating map from iterables
+  List<String> keys = ['a', 'b', 'c'];
+  List<int> values = [1, 2, 3];
+  Map<String, int> mapFromLists = Map.fromIterables(keys, values);
+  
+  print('Ages: $ages');
+  print('Prices: $prices');
+  print('Map from lists: $mapFromLists');
+}
+```
+
+**Accessing and modifying map values:**
+```dart
+void main() {
+  Map<String, String> countries = {
+    'US': 'United States',
+    'UK': 'United Kingdom',
+    'CA': 'Canada',
+    'AU': 'Australia'
+  };
+  
+  print('Initial countries: $countries');
+  
+  // Accessing values
+  print('US: ${countries['US']}');
+  print('Non-existent key: ${countries['XX']}'); // Returns null
+  
+  // Safe access with default value
+  String country = countries['XX'] ?? 'Unknown Country';
+  print('Country with default: $country');
+  
+  // Adding new key-value pairs
+  countries['IN'] = 'India';
+  countries['JP'] = 'Japan';
+  print('After adding: $countries');
+  
+  // Updating existing values
+  countries['US'] = 'United States of America';
+  print('After updating: $countries');
+  
+  // Adding multiple entries
+  countries.addAll({
+    'FR': 'France',
+    'DE': 'Germany'
+  });
+  print('After adding multiple: $countries');
+  
+  // Removing entries
+  String? removed = countries.remove('AU');
+  print('Removed value: $removed');
+  print('After removal: $countries');
+}
+```
+
+**Map operations and methods:**
+```dart
+void main() {
+  Map<String, int> inventory = {
+    'apples': 50,
+    'bananas': 30,
+    'oranges': 25,
+    'grapes': 15
+  };
+  
+  print('Inventory: $inventory');
+  
+  // Map properties
+  print('Number of items: ${inventory.length}');
+  print('Is empty: ${inventory.isEmpty}');
+  print('Keys: ${inventory.keys}');
+  print('Values: ${inventory.values}');
+  
+  // Checking for keys and values
+  print('Contains apples: ${inventory.containsKey('apples')}');
+  print('Contains quantity 30: ${inventory.containsValue(30)}');
+  
+  // Iterating over map
+  print('\nInventory details:');
+  inventory.forEach((fruit, quantity) {
+    print('$fruit: $quantity');
+  });
+  
+  // Iterating with entries
+  print('\nUsing entries:');
+  for (MapEntry<String, int> entry in inventory.entries) {
+    print('${entry.key}: ${entry.value}');
+  }
+  
+  // Convert to lists
+  List<String> fruits = inventory.keys.toList();
+  List<int> quantities = inventory.values.toList();
+  print('Fruits list: $fruits');
+  print('Quantities list: $quantities');
+}
+```
+
+**Advanced map operations:**
+```dart
+void main() {
+  Map<String, double> grades = {
+    'Alice': 92.5,
+    'Bob': 87.0,
+    'Charlie': 95.5,
+    'Diana': 89.5,
+    'Eve': 78.5
+  };
+  
+  // Filtering maps
+  Map<String, double> highGrades = Map.fromEntries(
+    grades.entries.where((entry) => entry.value >= 90)
+  );
+  print('High grades (>=90): $highGrades');
+  
+  // Transforming values
+  Map<String, String> letterGrades = grades.map(
+    (name, grade) => MapEntry(name, getLetterGrade(grade))
+  );
+  print('Letter grades: $letterGrades');
+  
+  // Finding maximum and minimum
+  double highestGrade = grades.values.reduce((a, b) => a > b ? a : b);
+  double lowestGrade = grades.values.reduce((a, b) => a < b ? a : b);
+  
+  String topStudent = grades.entries
+      .where((entry) => entry.value == highestGrade)
+      .first
+      .key;
+  
+  print('Highest grade: $highestGrade (by $topStudent)');
+  print('Lowest grade: $lowestGrade');
+  
+  // Group by condition
+  Map<String, List<String>> groupedStudents = {
+    'excellent': [],
+    'good': [],
+    'average': []
+  };
+  
+  grades.forEach((name, grade) {
+    if (grade >= 90) {
+      groupedStudents['excellent']!.add(name);
+    } else if (grade >= 80) {
+      groupedStudents['good']!.add(name);
+    } else {
+      groupedStudents['average']!.add(name);
+    }
+  });
+  
+  print('Grouped students: $groupedStudents');
+}
+
+String getLetterGrade(double grade) {
+  if (grade >= 90) return 'A';
+  if (grade >= 80) return 'B';
+  if (grade >= 70) return 'C';
+  if (grade >= 60) return 'D';
+  return 'F';
+}
+```
+
+**Nested maps and complex data structures:**
+```dart
+void main() {
+  // Student database with nested information
+  Map<String, Map<String, dynamic>> students = {
+    'student1': {
+      'name': 'Alice Johnson',
+      'age': 20,
+      'grades': [92, 88, 95, 87],
+      'address': {
+        'street': '123 Main St',
+        'city': 'Boston',
+        'zipCode': '02101'
+      }
+    },
+    'student2': {
+      'name': 'Bob Smith',
+      'age': 19,
+      'grades': [78, 82, 85, 80],
+      'address': {
+        'street': '456 Oak Ave',
+        'city': 'New York',
+        'zipCode': '10001'
+      }
+    }
+  };
+  
+  // Accessing nested data
+  String studentName = students['student1']!['name'];
+  List<int> grades = students['student1']!['grades'];
+  String city = students['student1']!['address']['city'];
+  
+  print('Student: $studentName');
+  print('Grades: $grades');
+  print('City: $city');
+  
+  // Calculate average grade for each student
+  students.forEach((id, studentData) {
+    List<int> studentGrades = studentData['grades'];
+    double average = studentGrades.reduce((a, b) => a + b) / studentGrades.length;
+    print('${studentData['name']} average: ${average.toStringAsFixed(1)}');
+  });
+}
+```
+
 * **Topic 4.4: Collection Tools**
     * [ ] The spread operator (`...`) and collection `if`/`for`
 
+#### The Spread Operator and Collection If/For
+
+Dart provides powerful tools to work with collections more expressively and concisely.
+
+**Spread operator (`...`):**
+```dart
+void main() {
+  // Basic spread operator usage
+  List<int> numbers1 = [1, 2, 3];
+  List<int> numbers2 = [4, 5, 6];
+  List<int> combined = [...numbers1, ...numbers2];
+  
+  print('Numbers 1: $numbers1');
+  print('Numbers 2: $numbers2');
+  print('Combined: $combined');
+  
+  // Adding individual elements with spread
+  List<String> fruits = ['apple', 'banana'];
+  List<String> moreFruits = ['orange', ...fruits, 'grape', 'kiwi'];
+  print('More fruits: $moreFruits');
+  
+  // Null-aware spread operator (...?)
+  List<int>? nullableList = null;
+  List<int> safeList = [1, 2, ...?nullableList, 3, 4];
+  print('Safe list: $safeList');
+  
+  // Spread with sets
+  Set<String> colors1 = {'red', 'green'};
+  Set<String> colors2 = {'blue', 'yellow'};
+  Set<String> allColors = {...colors1, ...colors2, 'purple'};
+  print('All colors: $allColors');
+  
+  // Spread with maps
+  Map<String, int> map1 = {'a': 1, 'b': 2};
+  Map<String, int> map2 = {'c': 3, 'd': 4};
+  Map<String, int> combinedMap = {...map1, ...map2, 'e': 5};
+  print('Combined map: $combinedMap');
+}
+```
+
+**Collection if (conditional elements):**
+```dart
+void main() {
+  bool includeBonusItems = true;
+  bool isVip = false;
+  int userLevel = 5;
+  
+  // List with conditional elements
+  List<String> items = [
+    'basic_item',
+    'standard_item',
+    if (includeBonusItems) 'bonus_item',
+    if (isVip) 'vip_item',
+    if (userLevel >= 5) 'advanced_item',
+    if (userLevel >= 10) 'expert_item',
+  ];
+  
+  print('Items: $items');
+  
+  // Set with conditional elements
+  Set<String> permissions = {
+    'read',
+    if (userLevel >= 3) 'write',
+    if (userLevel >= 5) 'modify',
+    if (userLevel >= 8) 'delete',
+    if (isVip) 'admin',
+  };
+  
+  print('Permissions: $permissions');
+  
+  // Map with conditional entries
+  Map<String, dynamic> userProfile = {
+    'name': 'John Doe',
+    'level': userLevel,
+    if (isVip) 'membership': 'VIP',
+    if (userLevel >= 5) 'badge': 'Advanced User',
+    if (includeBonusItems) 'bonusPoints': 100,
+  };
+  
+  print('User profile: $userProfile');
+}
+```
+
+**Collection for (loops in collections):**
+```dart
+void main() {
+  // Generate list using for loop
+  List<int> squares = [
+    for (int i = 1; i <= 5; i++) i * i
+  ];
+  print('Squares: $squares');
+  
+  // Generate list from another collection
+  List<String> names = ['alice', 'bob', 'charlie'];
+  List<String> upperNames = [
+    for (String name in names) name.toUpperCase()
+  ];
+  print('Upper names: $upperNames');
+  
+  // Conditional generation
+  List<int> evenNumbers = [
+    for (int i = 1; i <= 10; i++)
+      if (i % 2 == 0) i
+  ];
+  print('Even numbers: $evenNumbers');
+  
+  // Complex generation with multiple conditions
+  List<String> products = ['laptop', 'phone', 'tablet', 'watch'];
+  List<double> prices = [999.99, 599.99, 399.99, 299.99];
+  
+  List<String> expensiveProducts = [
+    for (int i = 0; i < products.length; i++)
+      if (prices[i] > 500) '${products[i]} (\$${prices[i]})'
+  ];
+  print('Expensive products: $expensiveProducts');
+  
+  // Generate set with for loop
+  Set<String> uniqueFirstLetters = {
+    for (String name in names) name[0].toUpperCase()
+  };
+  print('Unique first letters: $uniqueFirstLetters');
+  
+  // Generate map with for loop
+  Map<String, int> nameLengths = {
+    for (String name in names) name: name.length
+  };
+  print('Name lengths: $nameLengths');
+}
+```
+
+**Combining spread, if, and for:**
+```dart
+void main() {
+  List<String> basicFeatures = ['login', 'profile'];
+  List<String> premiumFeatures = ['analytics', 'export'];
+  List<String> adminFeatures = ['user_management', 'system_config'];
+  
+  bool isPremium = true;
+  bool isAdmin = false;
+  List<String> extraFeatures = ['notifications', 'themes'];
+  
+  // Complex collection construction
+  List<String> availableFeatures = [
+    ...basicFeatures,
+    if (isPremium) ...premiumFeatures,
+    if (isAdmin) ...adminFeatures,
+    ...extraFeatures,
+    for (int i = 1; i <= 3; i++) 'feature_$i',
+    if (isPremium)
+      for (String feature in ['advanced_search', 'priority_support'])
+        feature,
+  ];
+  
+  print('Available features: $availableFeatures');
+  
+  // Building user interface elements
+  bool showHeader = true;
+  bool showFooter = true;
+  List<String> menuItems = ['home', 'about', 'contact'];
+  
+  List<String> pageElements = [
+    if (showHeader) 'header',
+    'main_content',
+    for (String item in menuItems) 'menu_$item',
+    if (showFooter) 'footer',
+    for (int i = 1; i <= 2; i++)
+      if (isPremium) 'premium_widget_$i',
+  ];
+  
+  print('Page elements: $pageElements');
+}
+```
+
+**Practical examples combining all collection tools:**
+```dart
+void main() {
+  // E-commerce cart system
+  Map<String, double> inventory = {
+    'laptop': 999.99,
+    'mouse': 29.99,
+    'keyboard': 79.99,
+    'monitor': 299.99,
+    'webcam': 89.99,
+  };
+  
+  List<String> cartItems = ['laptop', 'mouse'];
+  bool hasDiscount = true;
+  bool isMember = true;
+  double discountRate = 0.1;
+  double membershipDiscount = 0.05;
+  
+  // Calculate order summary
+  List<Map<String, dynamic>> orderItems = [
+    for (String item in cartItems)
+      if (inventory.containsKey(item))
+        {
+          'name': item,
+          'price': inventory[item]!,
+          'discountedPrice': inventory[item]! * 
+            (1 - (hasDiscount ? discountRate : 0) - 
+             (isMember ? membershipDiscount : 0))
+        }
+  ];
+  
+  print('Order items:');
+  for (var item in orderItems) {
+    print('${item['name']}: \$${item['price']} -> \$${item['discountedPrice']?.toStringAsFixed(2)}');
+  }
+  
+  // Generate report
+  double totalOriginal = orderItems.fold(0, (sum, item) => sum + item['price']);
+  double totalDiscounted = orderItems.fold(0, (sum, item) => sum + item['discountedPrice']);
+  double savings = totalOriginal - totalDiscounted;
+  
+  Map<String, dynamic> orderSummary = {
+    'items': orderItems.length,
+    'originalTotal': totalOriginal,
+    'finalTotal': totalDiscounted,
+    'savings': savings,
+    if (hasDiscount) 'discount': '${(discountRate * 100).toInt()}%',
+    if (isMember) 'membershipDiscount': '${(membershipDiscount * 100).toInt()}%',
+    ...if (savings > 50) {'specialOffer': 'Free shipping!'},
+  };
+  
+  print('\nOrder Summary: $orderSummary');
+}
+```
+
 ### **Module 5: Functions (Reusable Code)**
+
 * **Topic 5.1: Function Basics**
     * [ ] Defining functions with parameters and return values
+
+#### Defining Functions with Parameters and Return Values
+
+Functions are reusable blocks of code that perform specific tasks. They help organize code and avoid repetition.
+
+**Basic function structure:**
+```dart
+// Function declaration syntax:
+// returnType functionName(parameters) {
+//   // function body
+//   return value; // if return type is not void
+// }
+
+void main() {
+  // Calling functions
+  greetUser();
+  sayHello('Alice');
+  
+  int result = addNumbers(5, 3);
+  print('5 + 3 = $result');
+  
+  double area = calculateCircleArea(5.0);
+  print('Area of circle with radius 5: ${area.toStringAsFixed(2)}');
+}
+
+// Function with no parameters and no return value
+void greetUser() {
+  print('Hello, welcome to Dart programming!');
+}
+
+// Function with parameter but no return value
+void sayHello(String name) {
+  print('Hello, $name!');
+}
+
+// Function with parameters and return value
+int addNumbers(int a, int b) {
+  return a + b;
+}
+
+// Function with calculation
+double calculateCircleArea(double radius) {
+  const double pi = 3.14159;
+  return pi * radius * radius;
+}
+```
+
+**Functions with different return types:**
+```dart
+void main() {
+  // String function
+  String message = createWelcomeMessage('Bob', 25);
+  print(message);
+  
+  // Boolean function
+  bool isEligible = checkVotingEligibility(20);
+  print('Can vote: $isEligible');
+  
+  // List function
+  List<int> numbers = generateNumbers(5);
+  print('Generated numbers: $numbers');
+  
+  // Map function
+  Map<String, dynamic> profile = createUserProfile('Charlie', 30, 'Engineer');
+  print('User profile: $profile');
+}
+
+String createWelcomeMessage(String name, int age) {
+  return 'Welcome $name! You are $age years old.';
+}
+
+bool checkVotingEligibility(int age) {
+  return age >= 18;
+}
+
+List<int> generateNumbers(int count) {
+  List<int> numbers = [];
+  for (int i = 1; i <= count; i++) {
+    numbers.add(i);
+  }
+  return numbers;
+}
+
+Map<String, dynamic> createUserProfile(String name, int age, String job) {
+  return {
+    'name': name,
+    'age': age,
+    'job': job,
+    'createdAt': DateTime.now().toString(),
+  };
+}
+```
+
+**Function documentation and best practices:**
+```dart
+/// Calculates the Body Mass Index (BMI) for a person.
+/// 
+/// The [weight] should be in kilograms and [height] in meters.
+/// Returns the BMI value as a double.
+/// 
+/// Example:
+/// ```dart
+/// double bmi = calculateBMI(70.0, 1.75);
+/// print('BMI: ${bmi.toStringAsFixed(1)}'); // BMI: 22.9
+/// ```
+double calculateBMI(double weight, double height) {
+  if (height <= 0) {
+    throw ArgumentError('Height must be greater than 0');
+  }
+  return weight / (height * height);
+}
+
+/// Determines BMI category based on BMI value.
+/// 
+/// Returns a string describing the BMI category:
+/// - 'Underweight' for BMI < 18.5
+/// - 'Normal' for BMI 18.5-24.9
+/// - 'Overweight' for BMI 25-29.9
+/// - 'Obese' for BMI >= 30
+String getBMICategory(double bmi) {
+  if (bmi < 18.5) {
+    return 'Underweight';
+  } else if (bmi < 25.0) {
+    return 'Normal';
+  } else if (bmi < 30.0) {
+    return 'Overweight';
+  } else {
+    return 'Obese';
+  }
+}
+
+void main() {
+  try {
+    double bmi = calculateBMI(70.0, 1.75);
+    String category = getBMICategory(bmi);
+    
+    print('BMI: ${bmi.toStringAsFixed(1)}');
+    print('Category: $category');
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+```
+
 * **Topic 5.2: Parameter Types**
     * [ ] Positional, named, optional, and required parameters
+
+#### Parameter Types in Dart
+
+Dart provides flexible ways to define function parameters to make your functions more versatile and easier to use.
+
+**Positional parameters:**
+```dart
+void main() {
+  // Required positional parameters - must be provided in order
+  String greeting = createGreeting('Hello', 'Alice');
+  print(greeting);
+  
+  // Order matters with positional parameters
+  int result1 = subtract(10, 3); // 10 - 3 = 7
+  int result2 = subtract(3, 10); // 3 - 10 = -7
+  print('10 - 3 = $result1');
+  print('3 - 10 = $result2');
+  
+  // Function with multiple positional parameters
+  displayPersonInfo('John', 25, 'Engineer');
+}
+
+String createGreeting(String greeting, String name) {
+  return '$greeting, $name!';
+}
+
+int subtract(int a, int b) {
+  return a - b;
+}
+
+void displayPersonInfo(String name, int age, String profession) {
+  print('Name: $name, Age: $age, Profession: $profession');
+}
+```
+
+**Optional positional parameters:**
+```dart
+void main() {
+  // Optional positional parameters are enclosed in square brackets
+  printUserInfo('Alice'); // Only required parameter
+  printUserInfo('Bob', 30); // Required + one optional
+  printUserInfo('Charlie', 25, 'Engineer'); // All parameters
+  
+  // Default values for optional parameters
+  String message1 = formatMessage('Hello');
+  String message2 = formatMessage('Hello', 'World');
+  String message3 = formatMessage('Hello', 'World', '!');
+  
+  print(message1); // "Hello there"
+  print(message2); // "Hello World"
+  print(message3); // "Hello World!"
+}
+
+void printUserInfo(String name, [int? age, String? profession]) {
+  print('Name: $name');
+  if (age != null) {
+    print('Age: $age');
+  }
+  if (profession != null) {
+    print('Profession: $profession');
+  }
+  print('---');
+}
+
+String formatMessage(String greeting, [String target = 'there', String punctuation = '']) {
+  return '$greeting $target$punctuation';
+}
+```
+
+**Named parameters:**
+```dart
+void main() {
+  // Named parameters make function calls more readable
+  createUser(name: 'Alice', email: 'alice@example.com');
+  
+  // Order doesn't matter with named parameters
+  createUser(email: 'bob@example.com', name: 'Bob');
+  
+  // Optional named parameters
+  createUser(name: 'Charlie', email: 'charlie@example.com', age: 25);
+  
+  // With default values
+  displayMessage(text: 'Hello World');
+  displayMessage(text: 'Important!', isUrgent: true);
+  displayMessage(text: 'Debug info', isUrgent: false, includeTimestamp: true);
+}
+
+void createUser({required String name, required String email, int? age, String role = 'user'}) {
+  print('Creating user:');
+  print('  Name: $name');
+  print('  Email: $email');
+  if (age != null) {
+    print('  Age: $age');
+  }
+  print('  Role: $role');
+  print('---');
+}
+
+void displayMessage({
+  required String text,
+  bool isUrgent = false,
+  bool includeTimestamp = false,
+}) {
+  String message = text;
+  
+  if (isUrgent) {
+    message = '🚨 URGENT: $message';
+  }
+  
+  if (includeTimestamp) {
+    message = '${DateTime.now()}: $message';
+  }
+  
+  print(message);
+}
+```
+
+**Mixing positional and named parameters:**
+```dart
+void main() {
+  // Positional parameters come first, then named parameters
+  processOrder('12345', 'laptop', quantity: 2);
+  processOrder('12346', 'phone', quantity: 1, priority: 'high');
+  
+  // With optional positional and named parameters
+  analyzeData([1, 2, 3, 4, 5]);
+  analyzeData([1, 2, 3, 4, 5], 'mean');
+  analyzeData([1, 2, 3, 4, 5], 'median', includeDetails: true);
+}
+
+void processOrder(String orderId, String item, {required int quantity, String priority = 'normal'}) {
+  print('Processing Order:');
+  print('  ID: $orderId');
+  print('  Item: $item');
+  print('  Quantity: $quantity');
+  print('  Priority: $priority');
+  print('---');
+}
+
+void analyzeData(List<int> data, [String method = 'sum', {bool includeDetails = false}]) {
+  print('Analyzing data: $data');
+  print('Method: $method');
+  
+  switch (method) {
+    case 'sum':
+      int sum = data.reduce((a, b) => a + b);
+      print('Sum: $sum');
+      break;
+    case 'mean':
+      double mean = data.reduce((a, b) => a + b) / data.length;
+      print('Mean: ${mean.toStringAsFixed(2)}');
+      break;
+    case 'median':
+      List<int> sorted = [...data]..sort();
+      double median = sorted.length % 2 == 0
+          ? (sorted[sorted.length ~/ 2 - 1] + sorted[sorted.length ~/ 2]) / 2
+          : sorted[sorted.length ~/ 2].toDouble();
+      print('Median: $median');
+      break;
+  }
+  
+  if (includeDetails) {
+    print('Data length: ${data.length}');
+    print('Min: ${data.reduce((a, b) => a < b ? a : b)}');
+    print('Max: ${data.reduce((a, b) => a > b ? a : b)}');
+  }
+  print('---');
+}
+```
+
+**Real-world parameter examples:**
+```dart
+void main() {
+  // API function with various parameter types
+  String response1 = makeApiCall('/users');
+  String response2 = makeApiCall('/users', method: 'POST');
+  String response3 = makeApiCall(
+    '/users/123',
+    method: 'PUT',
+    headers: {'Authorization': 'Bearer token123'},
+    timeout: 5000,
+  );
+  
+  print('Response 1: $response1');
+  print('Response 2: $response2');
+  print('Response 3: $response3');
+  
+  // Configuration function
+  startServer();
+  startServer(8080);
+  startServer(3000, host: '0.0.0.0', enableLogging: true);
+}
+
+String makeApiCall(
+  String endpoint, {
+  String method = 'GET',
+  Map<String, String>? headers,
+  int timeout = 3000,
+  Map<String, dynamic>? body,
+}) {
+  // Simulate API call
+  String result = 'API Call:\n';
+  result += '  Endpoint: $endpoint\n';
+  result += '  Method: $method\n';
+  result += '  Timeout: ${timeout}ms\n';
+  
+  if (headers != null) {
+    result += '  Headers: $headers\n';
+  }
+  
+  if (body != null) {
+    result += '  Body: $body\n';
+  }
+  
+  return result;
+}
+
+void startServer([int port = 8080, {String host = 'localhost', bool enableLogging = false}]) {
+  print('Starting server...');
+  print('  Host: $host');
+  print('  Port: $port');
+  print('  Logging: ${enableLogging ? 'enabled' : 'disabled'}');
+  print('---');
+}
+```
+
 * **Topic 5.3: Advanced Function Concepts**
     * [ ] Arrow syntax (`=>`), anonymous functions, and lexical scope
     * [ ] Using `typedef` for function aliases
+
+#### Arrow Syntax (`=>`)
+
+Arrow functions provide a concise way to write simple functions that contain only one expression.
+
+```dart
+void main() {
+  // Traditional function vs arrow function
+  print('Traditional: ${addTraditional(5, 3)}');
+  print('Arrow: ${addArrow(5, 3)}');
+  
+  // Arrow functions with different operations
+  print('Square of 7: ${square(7)}');
+  print('Is even 8: ${isEven(8)}');
+  print('Is even 7: ${isEven(7)}');
+  
+  // Arrow functions with string operations
+  print('Greeting: ${greet('Alice')}');
+  print('Uppercase: ${toUpper('hello world')}');
+  
+  // Arrow functions with collections
+  List<int> numbers = [1, 2, 3, 4, 5];
+  List<int> doubled = numbers.map(doubleValue).toList();
+  List<int> evens = numbers.where(isEven).toList();
+  
+  print('Original: $numbers');
+  print('Doubled: $doubled');
+  print('Evens: $evens');
+}
+
+// Traditional function
+int addTraditional(int a, int b) {
+  return a + b;
+}
+
+// Arrow function - equivalent to above
+int addArrow(int a, int b) => a + b;
+
+// More arrow function examples
+int square(int n) => n * n;
+bool isEven(int n) => n % 2 == 0;
+String greet(String name) => 'Hello, $name!';
+String toUpper(String text) => text.toUpperCase();
+int doubleValue(int n) => n * 2;
+
+// Arrow functions with more complex expressions
+String formatPrice(double price) => '\$${price.toStringAsFixed(2)}';
+bool isValidEmail(String email) => email.contains('@') && email.contains('.');
+int getMax(int a, int b) => a > b ? a : b;
+```
+
+#### Anonymous Functions (Lambda Functions)
+
+Anonymous functions are functions without a name, often used as arguments to other functions.
+
+```dart
+void main() {
+  List<int> numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  
+  // Anonymous function with traditional syntax
+  List<int> squares = numbers.map((int n) {
+    return n * n;
+  }).toList();
+  print('Squares: $squares');
+  
+  // Anonymous function with arrow syntax
+  List<int> cubes = numbers.map((n) => n * n * n).toList();
+  print('Cubes: $cubes');
+  
+  // Filtering with anonymous functions
+  List<int> evens = numbers.where((n) => n % 2 == 0).toList();
+  List<int> largeNumbers = numbers.where((n) => n > 5).toList();
+  
+  print('Even numbers: $evens');
+  print('Numbers > 5: $largeNumbers');
+  
+  // forEach with anonymous function
+  print('Printing with forEach:');
+  numbers.where((n) => n <= 5).forEach((n) {
+    print('  Number: $n, Square: ${n * n}');
+  });
+  
+  // Sorting with anonymous functions
+  List<String> names = ['Charlie', 'Alice', 'Bob', 'Diana'];
+  
+  // Sort by length
+  List<String> sortedByLength = [...names];
+  sortedByLength.sort((a, b) => a.length.compareTo(b.length));
+  print('Sorted by length: $sortedByLength');
+  
+  // Sort by last letter
+  List<String> sortedByLastLetter = [...names];
+  sortedByLastLetter.sort((a, b) => a[a.length - 1].compareTo(b[b.length - 1]));
+  print('Sorted by last letter: $sortedByLastLetter');
+}
+```
+
+**Anonymous functions in practice:**
+```dart
+void main() {
+  // Using anonymous functions for event handling simulation
+  List<String> events = ['click', 'hover', 'focus', 'blur'];
+  
+  // Map events to handlers
+  Map<String, Function> eventHandlers = {
+    for (String event in events)
+      event: () => print('Handling $event event')
+  };
+  
+  // Execute handlers
+  eventHandlers.forEach((event, handler) {
+    print('Event: $event');
+    handler();
+  });
+  
+  // Complex data processing with anonymous functions
+  List<Map<String, dynamic>> products = [
+    {'name': 'Laptop', 'price': 999.99, 'category': 'Electronics'},
+    {'name': 'Book', 'price': 15.99, 'category': 'Education'},
+    {'name': 'Phone', 'price': 599.99, 'category': 'Electronics'},
+    {'name': 'Desk', 'price': 299.99, 'category': 'Furniture'},
+  ];
+  
+  // Filter expensive electronics
+  List<Map<String, dynamic>> expensiveElectronics = products
+      .where((product) => 
+          product['category'] == 'Electronics' && product['price'] > 500)
+      .toList();
+  
+  print('Expensive electronics:');
+  expensiveElectronics.forEach((product) => 
+      print('  ${product['name']}: \$${product['price']}'));
+  
+  // Calculate total by category
+  Map<String, double> categoryTotals = {};
+  products.forEach((product) {
+    String category = product['category'];
+    double price = product['price'];
+    categoryTotals[category] = (categoryTotals[category] ?? 0) + price;
+  });
+  
+  print('Category totals: $categoryTotals');
+}
+```
+
+#### Lexical Scope
+
+Lexical scope means that functions have access to variables in their defining scope.
+
+```dart
+// Global variable
+String globalMessage = 'I am global';
+
+void main() {
+  String mainMessage = 'I am in main';
+  
+  // Function defined in main scope
+  void innerFunction() {
+    String innerMessage = 'I am inner';
+    print('From inner function:');
+    print('  $innerMessage');
+    print('  $mainMessage'); // Can access main's variable
+    print('  $globalMessage'); // Can access global variable
+  }
+  
+  innerFunction();
+  
+  // Closures - functions that capture variables from outer scope
+  Function makeMultiplier(int multiplier) {
+    // This function "closes over" the multiplier parameter
+    return (int value) => value * multiplier;
+  }
+  
+  Function multiplyByTwo = makeMultiplier(2);
+  Function multiplyByTen = makeMultiplier(10);
+  
+  print('5 * 2 = ${multiplyByTwo(5)}');
+  print('5 * 10 = ${multiplyByTen(5)}');
+  
+  // Practical closure example - counter
+  Function createCounter() {
+    int count = 0; // This variable is captured by the closure
+    
+    return () {
+      count++;
+      return count;
+    };
+  }
+  
+  Function counter1 = createCounter();
+  Function counter2 = createCounter();
+  
+  print('Counter 1: ${counter1()}'); // 1
+  print('Counter 1: ${counter1()}'); // 2
+  print('Counter 2: ${counter2()}'); // 1 (separate instance)
+  print('Counter 1: ${counter1()}'); // 3
+}
+```
+
+**Advanced closure examples:**
+```dart
+void main() {
+  // Configuration closure
+  Function createApiClient(String baseUrl, String apiKey) {
+    return (String endpoint) {
+      return 'Calling $baseUrl$endpoint with API key: ${apiKey.substring(0, 3)}...';
+    };
+  }
+  
+  Function userApi = createApiClient('https://api.example.com', 'key123456');
+  print(userApi('/users'));
+  print(userApi('/posts'));
+  
+  // Accumulator closure
+  Function createAccumulator(int initialValue) {
+    int sum = initialValue;
+    
+    return (int value) {
+      sum += value;
+      return sum;
+    };
+  }
+  
+  Function accumulator = createAccumulator(100);
+  print('Accumulator: ${accumulator(10)}'); // 110
+  print('Accumulator: ${accumulator(5)}');  // 115
+  print('Accumulator: ${accumulator(-3)}'); // 112
+  
+  // Memoization closure
+  Function memoize(Function fn) {
+    Map<String, dynamic> cache = {};
+    
+    return (dynamic arg) {
+      String key = arg.toString();
+      if (cache.containsKey(key)) {
+        print('Cache hit for $key');
+        return cache[key];
+      }
+      
+      dynamic result = fn(arg);
+      cache[key] = result;
+      print('Computed and cached result for $key');
+      return result;
+    };
+  }
+  
+  Function expensiveCalculation = (int n) {
+    // Simulate expensive operation
+    int result = 1;
+    for (int i = 1; i <= n; i++) {
+      result *= i;
+    }
+    return result;
+  };
+  
+  Function memoizedFactorial = memoize(expensiveCalculation);
+  
+  print('Factorial 5: ${memoizedFactorial(5)}');
+  print('Factorial 5: ${memoizedFactorial(5)}'); // Should use cache
+  print('Factorial 6: ${memoizedFactorial(6)}');
+}
+```
+
+#### Using `typedef` for Function Aliases
+
+`typedef` allows you to create type aliases for functions, making code more readable and maintainable.
+
+```dart
+// Define function type aliases
+typedef Calculator = int Function(int a, int b);
+typedef StringProcessor = String Function(String input);
+typedef BoolValidator = bool Function(String value);
+typedef EventHandler = void Function(String eventType, Map<String, dynamic> data);
+
+void main() {
+  // Using typedef with different function implementations
+  Calculator add = (a, b) => a + b;
+  Calculator multiply = (a, b) => a * b;
+  Calculator subtract = (a, b) => a - b;
+  
+  print('Add: ${performCalculation(add, 5, 3)}');
+  print('Multiply: ${performCalculation(multiply, 5, 3)}');
+  print('Subtract: ${performCalculation(subtract, 5, 3)}');
+  
+  // String processors
+  StringProcessor upperCase = (s) => s.toUpperCase();
+  StringProcessor addPrefix = (s) => 'PREFIX: $s';
+  StringProcessor reverse = (s) => s.split('').reversed.join('');
+  
+  String text = 'hello world';
+  print('Original: $text');
+  print('Upper: ${processString(upperCase, text)}');
+  print('Prefixed: ${processString(addPrefix, text)}');
+  print('Reversed: ${processString(reverse, text)}');
+  
+  // Validators
+  BoolValidator emailValidator = (email) => email.contains('@') && email.contains('.');
+  BoolValidator phoneValidator = (phone) => RegExp(r'^\d{10}$').hasMatch(phone);
+  BoolValidator notEmptyValidator = (value) => value.trim().isNotEmpty;
+  
+  print('Email validation: ${validateInput(emailValidator, 'user@example.com')}');
+  print('Phone validation: ${validateInput(phoneValidator, '1234567890')}');
+  print('Not empty validation: ${validateInput(notEmptyValidator, 'hello')}');
+  
+  // Event handling system
+  EventHandler logHandler = (type, data) => print('LOG: $type - $data');
+  EventHandler analyticsHandler = (type, data) => print('ANALYTICS: Tracking $type');
+  
+  handleEvent(logHandler, 'user_click', {'button': 'submit', 'page': 'login'});
+  handleEvent(analyticsHandler, 'page_view', {'page': 'dashboard'});
+}
+
+int performCalculation(Calculator calc, int a, int b) {
+  return calc(a, b);
+}
+
+String processString(StringProcessor processor, String input) {
+  return processor(input);
+}
+
+bool validateInput(BoolValidator validator, String input) {
+  return validator(input);
+}
+
+void handleEvent(EventHandler handler, String eventType, Map<String, dynamic> data) {
+  handler(eventType, data);
+}
+```
+
+**Advanced typedef usage:**
+```dart
+// Complex typedef examples
+typedef AsyncDataProcessor<T> = Future<T> Function(T data);
+typedef ListTransformer<T, R> = List<R> Function(List<T> items);
+typedef ConditionalAction = void Function() Function(bool condition);
+
+// Generic typedef
+typedef Mapper<T, R> = R Function(T input);
+typedef Predicate<T> = bool Function(T input);
+typedef Consumer<T> = void Function(T input);
+
+void main() {
+  // Generic mappers
+  Mapper<int, String> intToString = (n) => 'Number: $n';
+  Mapper<String, int> stringLength = (s) => s.length;
+  Mapper<double, int> doubleToInt = (d) => d.round();
+  
+  print('Int to string: ${intToString(42)}');
+  print('String length: ${stringLength('Hello')}');
+  print('Double to int: ${doubleToInt(3.7)}');
+  
+  // List transformers
+  ListTransformer<int, String> numbersToStrings = (numbers) =>
+      numbers.map((n) => 'Item $n').toList();
+  
+  ListTransformer<String, int> stringsToLengths = (strings) =>
+      strings.map((s) => s.length).toList();
+  
+  List<int> numbers = [1, 2, 3, 4, 5];
+  List<String> words = ['hello', 'world', 'dart'];
+  
+  print('Numbers to strings: ${numbersToStrings(numbers)}');
+  print('Strings to lengths: ${stringsToLengths(words)}');
+  
+  // Conditional actions
+  ConditionalAction createConditionalGreeting(String name) {
+    return (bool shouldGreet) {
+      return shouldGreet ? () => print('Hello, $name!') : () => print('...');
+    };
+  }
+  
+  ConditionalAction greetAlice = createConditionalGreeting('Alice');
+  greetAlice(true)();  // Hello, Alice!
+  greetAlice(false)(); // ...
+  
+  // Practical application: Plugin system
+  demonstratePluginSystem();
+}
+
+// Plugin system demonstration using typedef
+typedef PluginAction = void Function(Map<String, dynamic> context);
+typedef PluginFilter = bool Function(String pluginName, Map<String, dynamic> context);
+
+void demonstratePluginSystem() {
+  // Define plugins
+  Map<String, PluginAction> plugins = {
+    'logger': (context) => print('LOG: ${context['message']}'),
+    'validator': (context) => print('VALIDATE: ${context['data']}'),
+    'formatter': (context) => print('FORMAT: ${context['text']?.toUpperCase()}'),
+  };
+  
+  // Plugin filters
+  PluginFilter devOnlyFilter = (name, context) => 
+      name.startsWith('dev_') || context['environment'] == 'development';
+  
+  PluginFilter userRoleFilter = (name, context) =>
+      context['userRole'] == 'admin' || !name.contains('admin');
+  
+  // Execute plugins with filtering
+  Map<String, dynamic> context = {
+    'message': 'User logged in',
+    'data': {'user': 'john@example.com'},
+    'text': 'hello world',
+    'environment': 'production',
+    'userRole': 'user',
+  };
+  
+  executePlugins(plugins, context, [userRoleFilter]);
+}
+
+void executePlugins(
+  Map<String, PluginAction> plugins,
+  Map<String, dynamic> context,
+  List<PluginFilter> filters,
+) {
+  plugins.forEach((name, action) {
+    bool shouldExecute = filters.every((filter) => filter(name, context));
+    
+    if (shouldExecute) {
+      print('Executing plugin: $name');
+      action(context);
+    } else {
+      print('Skipping plugin: $name (filtered out)');
+    }
+  });
+}
+```
 
 ### **Module 6: Object-Oriented Programming (OOP) - Part 1**
 * **Topic 6.1: Classes and Objects**
