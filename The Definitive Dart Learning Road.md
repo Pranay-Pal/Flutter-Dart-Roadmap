@@ -2921,69 +2921,1744 @@ void executePlugins(
 ```
 
 ### **Module 6: Object-Oriented Programming (OOP) - Part 1**
+
 * **Topic 6.1: Classes and Objects**
     * [ ] Creating classes, properties (fields), and methods
+
+#### Creating Classes, Properties (Fields), and Methods
+
+Classes are blueprints for creating objects. They encapsulate data (properties) and behavior (methods) into a single unit.
+
+**Basic class structure:**
+```dart
+class Person {
+  // Properties (fields)
+  String name;
+  int age;
+  String email;
+  
+  // Constructor
+  Person(this.name, this.age, this.email);
+  
+  // Methods
+  void introduce() {
+    print('Hi, I\'m $name, $age years old. Email: $email');
+  }
+  
+  void celebrateBirthday() {
+    age++;
+    print('Happy birthday! $name is now $age years old.');
+  }
+  
+  String getInfo() {
+    return 'Name: $name, Age: $age, Email: $email';
+  }
+}
+
+void main() {
+  // Creating objects (instances of the class)
+  Person person1 = Person('Alice', 25, 'alice@example.com');
+  Person person2 = Person('Bob', 30, 'bob@example.com');
+  
+  // Using object methods
+  person1.introduce();
+  person2.introduce();
+  
+  // Accessing and modifying properties
+  print('${person1.name} is ${person1.age} years old');
+  person1.celebrateBirthday();
+  
+  // Using getter methods
+  print(person1.getInfo());
+}
+```
+
+**Class with private properties and getters/setters:**
+```dart
+class BankAccount {
+  String _accountNumber; // Private property (starts with _)
+  String _holderName;
+  double _balance;
+  
+  BankAccount(this._accountNumber, this._holderName, this._balance);
+  
+  // Getters
+  String get accountNumber => _accountNumber;
+  String get holderName => _holderName;
+  double get balance => _balance;
+  
+  // Setter with validation
+  set holderName(String name) {
+    if (name.trim().isEmpty) {
+      throw ArgumentError('Name cannot be empty');
+    }
+    _holderName = name;
+  }
+  
+  // Methods
+  void deposit(double amount) {
+    if (amount <= 0) {
+      print('Deposit amount must be positive');
+      return;
+    }
+    _balance += amount;
+    print('Deposited \$${amount.toStringAsFixed(2)}. New balance: \$${_balance.toStringAsFixed(2)}');
+  }
+  
+  bool withdraw(double amount) {
+    if (amount <= 0) {
+      print('Withdrawal amount must be positive');
+      return false;
+    }
+    if (amount > _balance) {
+      print('Insufficient funds. Available balance: \$${_balance.toStringAsFixed(2)}');
+      return false;
+    }
+    _balance -= amount;
+    print('Withdrew \$${amount.toStringAsFixed(2)}. New balance: \$${_balance.toStringAsFixed(2)}');
+    return true;
+  }
+  
+  void displayAccountInfo() {
+    print('Account: $_accountNumber');
+    print('Holder: $_holderName');
+    print('Balance: \$${_balance.toStringAsFixed(2)}');
+  }
+}
+
+void main() {
+  BankAccount account = BankAccount('ACC123456', 'John Doe', 1000.0);
+  
+  account.displayAccountInfo();
+  
+  // Using getters
+  print('Account holder: ${account.holderName}');
+  print('Current balance: \$${account.balance.toStringAsFixed(2)}');
+  
+  // Using methods
+  account.deposit(500.0);
+  account.withdraw(200.0);
+  account.withdraw(2000.0); // Should fail
+  
+  // Using setter
+  account.holderName = 'John Smith';
+  account.displayAccountInfo();
+}
+```
+
+**Static properties and methods:**
+```dart
+class MathUtils {
+  // Static property
+  static const double pi = 3.14159;
+  static int _calculationCount = 0;
+  
+  // Static methods
+  static double calculateCircleArea(double radius) {
+    _calculationCount++;
+    return pi * radius * radius;
+  }
+  
+  static double calculateRectangleArea(double width, double height) {
+    _calculationCount++;
+    return width * height;
+  }
+  
+  static int getCalculationCount() {
+    return _calculationCount;
+  }
+  
+  static void resetCalculationCount() {
+    _calculationCount = 0;
+  }
+}
+
+class Student {
+  String name;
+  int grade;
+  static int totalStudents = 0; // Tracks total number of students
+  
+  Student(this.name, this.grade) {
+    totalStudents++; // Increment when new student is created
+  }
+  
+  void displayInfo() {
+    print('Student: $name, Grade: $grade');
+  }
+  
+  static void displayTotalStudents() {
+    print('Total students: $totalStudents');
+  }
+}
+
+void main() {
+  // Using static methods without creating instances
+  double circleArea = MathUtils.calculateCircleArea(5.0);
+  double rectArea = MathUtils.calculateRectangleArea(4.0, 6.0);
+  
+  print('Circle area: ${circleArea.toStringAsFixed(2)}');
+  print('Rectangle area: ${rectArea.toStringAsFixed(2)}');
+  print('Total calculations: ${MathUtils.getCalculationCount()}');
+  
+  // Using static properties
+  print('Value of Pi: ${MathUtils.pi}');
+  
+  // Tracking students
+  Student.displayTotalStudents(); // 0
+  
+  Student student1 = Student('Alice', 90);
+  Student student2 = Student('Bob', 85);
+  Student student3 = Student('Charlie', 92);
+  
+  Student.displayTotalStudents(); // 3
+  
+  student1.displayInfo();
+  student2.displayInfo();
+  student3.displayInfo();
+}
+```
+
 * **Topic 6.2: Constructors**
     * [ ] Default, named, constant, and factory constructors
+
+#### Constructors in Dart
+
+Constructors are special methods used to create and initialize objects. Dart provides several types of constructors.
+
+**Default and basic constructors:**
+```dart
+class Rectangle {
+  double width;
+  double height;
+  
+  // Default constructor
+  Rectangle(this.width, this.height);
+  
+  // Constructor with parameter validation
+  Rectangle.withValidation(double width, double height) {
+    if (width <= 0 || height <= 0) {
+      throw ArgumentError('Width and height must be positive');
+    }
+    this.width = width;
+    this.height = height;
+  }
+  
+  double get area => width * height;
+  double get perimeter => 2 * (width + height);
+  
+  void display() {
+    print('Rectangle: ${width}x$height, Area: $area, Perimeter: $perimeter');
+  }
+}
+
+void main() {
+  // Using default constructor
+  Rectangle rect1 = Rectangle(5.0, 3.0);
+  rect1.display();
+  
+  // Using constructor with validation
+  try {
+    Rectangle rect2 = Rectangle.withValidation(4.0, 6.0);
+    rect2.display();
+    
+    Rectangle rect3 = Rectangle.withValidation(-2.0, 3.0); // This will throw an error
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+```
+
+**Named constructors:**
+```dart
+class Point {
+  double x;
+  double y;
+  
+  // Default constructor
+  Point(this.x, this.y);
+  
+  // Named constructor for origin point
+  Point.origin() {
+    x = 0;
+    y = 0;
+  }
+  
+  // Named constructor from another point
+  Point.fromPoint(Point other) {
+    x = other.x;
+    y = other.y;
+  }
+  
+  // Named constructor from coordinates
+  Point.fromCoordinates(double x, double y) : this(x, y);
+  
+  // Named constructor for point on x-axis
+  Point.onXAxis(double x) : this(x, 0);
+  
+  // Named constructor for point on y-axis  
+  Point.onYAxis(double y) : this(0, y);
+  
+  double distanceFromOrigin() {
+    return sqrt(x * x + y * y);
+  }
+  
+  void display() {
+    print('Point($x, $y)');
+  }
+}
+
+// Import for sqrt function
+import 'dart:math';
+
+void main() {
+  // Using different constructors
+  Point p1 = Point(3.0, 4.0);           // Default constructor
+  Point p2 = Point.origin();            // Named constructor
+  Point p3 = Point.fromPoint(p1);       // Copy constructor
+  Point p4 = Point.onXAxis(5.0);        // Point on x-axis
+  Point p5 = Point.onYAxis(-3.0);       // Point on y-axis
+  
+  print('Points created:');
+  p1.display();
+  p2.display(); 
+  p3.display();
+  p4.display();
+  p5.display();
+  
+  print('Distance from origin: ${p1.distanceFromOrigin().toStringAsFixed(2)}');
+}
+```
+
+**Constant constructors:**
+```dart
+class ImmutablePoint {
+  final double x;
+  final double y;
+  
+  // Constant constructor - all fields must be final
+  const ImmutablePoint(this.x, this.y);
+  
+  // Named constant constructor
+  const ImmutablePoint.origin() : x = 0, y = 0;
+  
+  double get distanceFromOrigin => x * x + y * y;
+  
+  @override
+  String toString() => 'ImmutablePoint($x, $y)';
+}
+
+class Color {
+  final int red;
+  final int green;
+  final int blue;
+  
+  const Color(this.red, this.green, this.blue);
+  
+  // Named constant constructors for common colors
+  const Color.black() : red = 0, green = 0, blue = 0;
+  const Color.white() : red = 255, green = 255, blue = 255;
+  const Color.red() : red = 255, green = 0, blue = 0;
+  const Color.green() : red = 0, green = 255, blue = 0;
+  const Color.blue() : red = 0, green = 0, blue = 255;
+  
+  @override
+  String toString() => 'Color(r:$red, g:$green, b:$blue)';
+}
+
+void main() {
+  // Constant objects - created at compile time
+  const ImmutablePoint origin = ImmutablePoint.origin();
+  const ImmutablePoint point = ImmutablePoint(3, 4);
+  
+  // Constant colors
+  const Color redColor = Color.red();
+  const Color customColor = Color(128, 64, 192);
+  
+  print('Origin: $origin');
+  print('Point: $point');
+  print('Red color: $redColor');
+  print('Custom color: $customColor');
+  
+  // Comparing constant objects
+  const ImmutablePoint p1 = ImmutablePoint(1, 2);
+  const ImmutablePoint p2 = ImmutablePoint(1, 2);
+  
+  print('p1 == p2: ${p1 == p2}'); // true for const objects with same values
+  print('identical(p1, p2): ${identical(p1, p2)}'); // true - same object in memory
+}
+```
+
+**Factory constructors:**
+```dart
+class Logger {
+  String name;
+  static final Map<String, Logger> _loggers = {};
+  
+  // Private constructor
+  Logger._internal(this.name);
+  
+  // Factory constructor - can return existing instance
+  factory Logger(String name) {
+    if (_loggers.containsKey(name)) {
+      return _loggers[name]!;
+    } else {
+      final logger = Logger._internal(name);
+      _loggers[name] = logger;
+      return logger;
+    }
+  }
+  
+  void log(String message) {
+    print('[$name] $message');
+  }
+}
+
+class DatabaseConnection {
+  String host;
+  int port;
+  bool isConnected = false;
+  
+  DatabaseConnection._internal(this.host, this.port);
+  
+  // Factory constructor with connection logic
+  factory DatabaseConnection.connect(String host, int port) {
+    print('Connecting to $host:$port...');
+    
+    // Simulate connection validation
+    if (host.isEmpty || port <= 0) {
+      throw ArgumentError('Invalid host or port');
+    }
+    
+    DatabaseConnection connection = DatabaseConnection._internal(host, port);
+    connection.isConnected = true;
+    print('Connected successfully!');
+    return connection;
+  }
+  
+  void query(String sql) {
+    if (!isConnected) {
+      print('Error: Not connected to database');
+      return;
+    }
+    print('Executing query: $sql');
+  }
+  
+  void disconnect() {
+    isConnected = false;
+    print('Disconnected from $host:$port');
+  }
+}
+
+void main() {
+  // Factory constructor - singleton pattern
+  Logger logger1 = Logger('App');
+  Logger logger2 = Logger('App');
+  Logger logger3 = Logger('Database');
+  
+  print('logger1 == logger2: ${identical(logger1, logger2)}'); // true - same instance
+  print('logger1 == logger3: ${identical(logger1, logger3)}'); // false - different instances
+  
+  logger1.log('Application started');
+  logger2.log('User logged in'); // Same logger instance
+  logger3.log('Database query executed');
+  
+  // Factory constructor with validation
+  try {
+    DatabaseConnection db = DatabaseConnection.connect('localhost', 5432);
+    db.query('SELECT * FROM users');
+    db.disconnect();
+  } catch (e) {
+    print('Database error: $e');
+  }
+}
+```
+
 * **Topic 6.3: Inheritance**
     * [ ] Extending classes with `extends`, using `super`, and `@override`
 
+#### Inheritance with extends, super, and @override
+
+Inheritance allows a class to inherit properties and methods from another class, promoting code reuse.
+
+**Basic inheritance:**
+```dart
+// Base class (parent/superclass)
+class Animal {
+  String name;
+  int age;
+  
+  Animal(this.name, this.age);
+  
+  void eat() {
+    print('$name is eating');
+  }
+  
+  void sleep() {
+    print('$name is sleeping');
+  }
+  
+  void makeSound() {
+    print('$name makes a sound');
+  }
+  
+  void displayInfo() {
+    print('Animal: $name, Age: $age');
+  }
+}
+
+// Derived class (child/subclass)
+class Dog extends Animal {
+  String breed;
+  
+  Dog(String name, int age, this.breed) : super(name, age);
+  
+  // Override parent method
+  @override
+  void makeSound() {
+    print('$name barks: Woof! Woof!');
+  }
+  
+  // Additional method specific to Dog
+  void wagTail() {
+    print('$name is wagging tail happily');
+  }
+  
+  // Override displayInfo to include breed
+  @override
+  void displayInfo() {
+    super.displayInfo(); // Call parent method
+    print('Breed: $breed');
+  }
+}
+
+class Cat extends Animal {
+  bool isIndoor;
+  
+  Cat(String name, int age, this.isIndoor) : super(name, age);
+  
+  @override
+  void makeSound() {
+    print('$name meows: Meow! Meow!');
+  }
+  
+  void purr() {
+    print('$name is purring contentedly');
+  }
+  
+  @override
+  void displayInfo() {
+    super.displayInfo();
+    print('Indoor cat: $isIndoor');
+  }
+}
+
+void main() {
+  // Creating instances of derived classes
+  Dog dog = Dog('Buddy', 3, 'Golden Retriever');
+  Cat cat = Cat('Whiskers', 2, true);
+  
+  // Using inherited methods
+  dog.eat();
+  dog.sleep();
+  cat.eat();
+  cat.sleep();
+  
+  // Using overridden methods
+  dog.makeSound();
+  cat.makeSound();
+  
+  // Using class-specific methods
+  dog.wagTail();
+  cat.purr();
+  
+  // Using overridden displayInfo
+  print('\nDog Information:');
+  dog.displayInfo();
+  
+  print('\nCat Information:');
+  cat.displayInfo();
+}
+```
+
+**Advanced inheritance with method overriding:**
+```dart
+class Vehicle {
+  String brand;
+  String model;
+  int year;
+  double speed = 0;
+  
+  Vehicle(this.brand, this.model, this.year);
+  
+  void start() {
+    print('$brand $model is starting...');
+  }
+  
+  void stop() {
+    speed = 0;
+    print('$brand $model has stopped');
+  }
+  
+  void accelerate(double increment) {
+    speed += increment;
+    print('$brand $model is now going ${speed.toStringAsFixed(1)} km/h');
+  }
+  
+  virtual void displaySpeedLimit() {
+    print('General speed limit applies');
+  }
+  
+  void displayInfo() {
+    print('Vehicle: $brand $model ($year)');
+    print('Current speed: ${speed.toStringAsFixed(1)} km/h');
+  }
+}
+
+class Car extends Vehicle {
+  int numberOfDoors;
+  String fuelType;
+  
+  Car(String brand, String model, int year, this.numberOfDoors, this.fuelType) 
+      : super(brand, model, year);
+  
+  @override
+  void start() {
+    print('Starting car engine...');
+    super.start(); // Call parent start method
+    print('Car is ready to drive');
+  }
+  
+  @override
+  void accelerate(double increment) {
+    if (speed + increment > 180) {
+      print('Warning: Speed limit for cars is 180 km/h');
+      speed = 180;
+    } else {
+      super.accelerate(increment);
+    }
+  }
+  
+  @override
+  void displaySpeedLimit() {
+    print('Speed limit for cars: 180 km/h');
+  }
+  
+  void honk() {
+    print('$brand $model: Beep! Beep!');
+  }
+  
+  @override
+  void displayInfo() {
+    super.displayInfo();
+    print('Doors: $numberOfDoors, Fuel: $fuelType');
+  }
+}
+
+class Motorcycle extends Vehicle {
+  bool hasSidecar;
+  
+  Motorcycle(String brand, String model, int year, this.hasSidecar) 
+      : super(brand, model, year);
+  
+  @override
+  void start() {
+    print('Kick-starting motorcycle...');
+    super.start();
+    print('Motorcycle is ready to ride');
+  }
+  
+  @override
+  void accelerate(double increment) {
+    if (speed + increment > 120) {
+      print('Warning: Speed limit for motorcycles is 120 km/h');
+      speed = 120;
+    } else {
+      super.accelerate(increment);
+    }
+  }
+  
+  @override
+  void displaySpeedLimit() {
+    print('Speed limit for motorcycles: 120 km/h');
+  }
+  
+  void wheelie() {
+    if (hasSidecar) {
+      print('Cannot perform wheelie with sidecar');
+    } else {
+      print('$brand $model is doing a wheelie!');
+    }
+  }
+  
+  @override
+  void displayInfo() {
+    super.displayInfo();
+    print('Has sidecar: $hasSidecar');
+  }
+}
+
+void main() {
+  Car car = Car('Toyota', 'Camry', 2023, 4, 'Gasoline');
+  Motorcycle bike = Motorcycle('Harley-Davidson', 'Sportster', 2022, false);
+  
+  print('=== Car Operations ===');
+  car.start();
+  car.accelerate(50);
+  car.accelerate(100);
+  car.accelerate(50); // Should trigger speed limit warning
+  car.honk();
+  car.displaySpeedLimit();
+  car.displayInfo();
+  car.stop();
+  
+  print('\n=== Motorcycle Operations ===');
+  bike.start();
+  bike.accelerate(60);
+  bike.accelerate(80); // Should trigger speed limit warning
+  bike.wheelie();
+  bike.displaySpeedLimit();
+  bike.displayInfo();
+  bike.stop();
+  
+  // Polymorphism - treating derived classes as base class
+  print('\n=== Polymorphism Demo ===');
+  List<Vehicle> vehicles = [car, bike];
+  
+  for (Vehicle vehicle in vehicles) {
+    vehicle.displaySpeedLimit(); // Calls overridden method
+    vehicle.accelerate(30);
+  }
+}
+```
+
+**Using super in constructors and methods:**
+```dart
+class Employee {
+  String name;
+  String id;
+  double baseSalary;
+  
+  Employee(this.name, this.id, this.baseSalary) {
+    print('Employee constructor called for $name');
+  }
+  
+  double calculatePay() {
+    return baseSalary;
+  }
+  
+  void displayInfo() {
+    print('Employee: $name (ID: $id)');
+    print('Base Salary: \$${baseSalary.toStringAsFixed(2)}');
+  }
+}
+
+class Manager extends Employee {
+  double bonus;
+  int teamSize;
+  
+  Manager(String name, String id, double baseSalary, this.bonus, this.teamSize) 
+      : super(name, id, baseSalary) {
+    print('Manager constructor called for $name');
+  }
+  
+  @override
+  double calculatePay() {
+    double basePay = super.calculatePay(); // Get base salary from parent
+    return basePay + bonus;
+  }
+  
+  @override
+  void displayInfo() {
+    super.displayInfo(); // Call parent displayInfo first
+    print('Bonus: \$${bonus.toStringAsFixed(2)}');
+    print('Team Size: $teamSize');
+    print('Total Pay: \$${calculatePay().toStringAsFixed(2)}');
+  }
+  
+  void conductMeeting() {
+    print('$name is conducting a team meeting with $teamSize members');
+  }
+}
+
+class Developer extends Employee {
+  String programmingLanguage;
+  int experienceYears;
+  
+  Developer(String name, String id, double baseSalary, this.programmingLanguage, this.experienceYears) 
+      : super(name, id, baseSalary) {
+    print('Developer constructor called for $name');
+  }
+  
+  @override
+  double calculatePay() {
+    double basePay = super.calculatePay();
+    // Add experience bonus
+    double experienceBonus = experienceYears * 1000;
+    return basePay + experienceBonus;
+  }
+  
+  @override
+  void displayInfo() {
+    super.displayInfo();
+    print('Programming Language: $programmingLanguage');
+    print('Experience: $experienceYears years');
+    print('Total Pay: \$${calculatePay().toStringAsFixed(2)}');
+  }
+  
+  void writeCode() {
+    print('$name is writing code in $programmingLanguage');
+  }
+}
+
+void main() {
+  print('Creating employees...\n');
+  
+  Manager manager = Manager('Alice Johnson', 'MGR001', 80000, 15000, 5);
+  Developer developer = Developer('Bob Smith', 'DEV001', 70000, 'Dart', 3);
+  
+  print('\n=== Manager Information ===');
+  manager.displayInfo();
+  manager.conductMeeting();
+  
+  print('\n=== Developer Information ===');
+  developer.displayInfo();
+  developer.writeCode();
+  
+  // Demonstrating polymorphism
+  print('\n=== Payroll Processing ===');
+  List<Employee> employees = [manager, developer];
+  
+  double totalPayroll = 0;
+  for (Employee emp in employees) {
+    double pay = emp.calculatePay(); // Calls overridden method
+    totalPayroll += pay;
+    print('${emp.name}: \$${pay.toStringAsFixed(2)}');
+  }
+  
+  print('Total Payroll: \$${totalPayroll.toStringAsFixed(2)}');
+}
+```
+
 ### **Module 7: Object-Oriented Programming (OOP) - Part 2**
+
 * **Topic 7.1: Advanced Blueprints**
     * [ ] Abstract classes and methods
     * [ ] Implicit interfaces with `implements`
     * [ ] Reusing code with `mixins`
+
+#### Abstract Classes and Methods
+
+Abstract classes define a contract that subclasses must follow. They cannot be instantiated directly.
+
+```dart
+// Abstract class
+abstract class Shape {
+  String name;
+  
+  Shape(this.name);
+  
+  // Abstract methods - must be implemented by subclasses
+  double calculateArea();
+  double calculatePerimeter();
+  
+  // Concrete method - can be used by subclasses
+  void displayInfo() {
+    print('Shape: $name');
+    print('Area: ${calculateArea().toStringAsFixed(2)}');
+    print('Perimeter: ${calculatePerimeter().toStringAsFixed(2)}');
+  }
+}
+
+class Circle extends Shape {
+  double radius;
+  
+  Circle(this.radius) : super('Circle');
+  
+  @override
+  double calculateArea() => 3.14159 * radius * radius;
+  
+  @override
+  double calculatePerimeter() => 2 * 3.14159 * radius;
+}
+
+class Rectangle extends Shape {
+  double width, height;
+  
+  Rectangle(this.width, this.height) : super('Rectangle');
+  
+  @override
+  double calculateArea() => width * height;
+  
+  @override
+  double calculatePerimeter() => 2 * (width + height);
+}
+
+void main() {
+  // Shape shape = Shape('Generic'); // Error: Cannot instantiate abstract class
+  
+  List<Shape> shapes = [
+    Circle(5.0),
+    Rectangle(4.0, 6.0),
+  ];
+  
+  for (Shape shape in shapes) {
+    shape.displayInfo();
+    print('---');
+  }
+}
+```
+
+#### Implicit Interfaces with implements
+
+Every class defines an implicit interface. Use `implements` to ensure a class provides all methods of another class.
+
+```dart
+class Flyable {
+  void fly() => print('Flying through the air');
+}
+
+class Swimmable {
+  void swim() => print('Swimming in water');
+}
+
+// Bird implements both interfaces
+class Bird implements Flyable, Swimmable {
+  String species;
+  
+  Bird(this.species);
+  
+  @override
+  void fly() => print('$species is flying with wings');
+  
+  @override
+  void swim() => print('$species is swimming on water surface');
+}
+
+class Fish implements Swimmable {
+  String species;
+  
+  Fish(this.species);
+  
+  @override
+  void swim() => print('$species is swimming underwater');
+  
+  // Fish doesn't need to implement fly()
+}
+
+void main() {
+  Bird duck = Bird('Duck');
+  Fish salmon = Fish('Salmon');
+  
+  duck.fly();
+  duck.swim();
+  salmon.swim();
+}
+```
+
+#### Reusing Code with Mixins
+
+Mixins allow you to reuse code across multiple class hierarchies.
+
+```dart
+mixin Walkable {
+  void walk() => print('Walking on legs');
+}
+
+mixin Flyable {
+  void fly() => print('Flying with wings');
+}
+
+mixin Swimmable {
+  void swim() => print('Swimming in water');
+}
+
+class Animal {
+  String name;
+  Animal(this.name);
+}
+
+class Duck extends Animal with Walkable, Flyable, Swimmable {
+  Duck(String name) : super(name);
+  
+  @override
+  void fly() => print('$name is flying low over water');
+}
+
+class Penguin extends Animal with Walkable, Swimmable {
+  Penguin(String name) : super(name);
+  
+  @override
+  void swim() => print('$name is swimming underwater');
+}
+
+void main() {
+  Duck duck = Duck('Donald');
+  Penguin penguin = Penguin('Pingu');
+  
+  duck.walk();
+  duck.fly();
+  duck.swim();
+  
+  penguin.walk();
+  penguin.swim();
+  // penguin.fly(); // Error: Penguin doesn't have fly()
+}
+```
+
 * **Topic 7.2: Modern OOP Features**
     * [ ] Enhanced `enums`
     * [ ] Class modifiers (`interface`, `base`, `final`, `sealed`)
     * [ ] Adding functionality with `extension` methods
 
+#### Enhanced Enums
+
+Modern Dart enums can have fields, methods, and constructors.
+
+```dart
+enum Planet {
+  mercury(3.303e+23, 2.4397e6),
+  venus(4.869e+24, 6.0518e6),
+  earth(5.976e+24, 6.37814e6),
+  mars(6.421e+23, 3.3972e6);
+  
+  const Planet(this.mass, this.radius);
+  
+  final double mass;       // in kilograms
+  final double radius;     // in meters
+  
+  double get surfaceGravity => 6.67300E-11 * mass / (radius * radius);
+  
+  double surfaceWeight(double mass) => mass * surfaceGravity;
+}
+
+enum Status {
+  pending('Pending', '⏳'),
+  approved('Approved', '✅'),
+  rejected('Rejected', '❌');
+  
+  const Status(this.label, this.icon);
+  
+  final String label;
+  final String icon;
+  
+  @override
+  String toString() => '$icon $label';
+}
+
+void main() {
+  print('Planet data:');
+  for (Planet planet in Planet.values) {
+    print('${planet.name}: Surface gravity = ${planet.surfaceGravity.toStringAsFixed(2)} m/s²');
+  }
+  
+  print('\nStatus examples:');
+  for (Status status in Status.values) {
+    print(status);
+  }
+}
+```
+
+#### Class Modifiers
+
+```dart
+// Interface class - can only be implemented, not extended
+interface class Drawable {
+  void draw();
+}
+
+// Base class - can be extended but not implemented
+base class Vehicle {
+  void start() => print('Vehicle starting');
+}
+
+// Final class - cannot be extended or implemented
+final class DatabaseConnection {
+  void connect() => print('Connected to database');
+}
+
+// Sealed class - can only be extended in the same library
+sealed class Result<T> {
+  const Result();
+}
+
+class Success<T> extends Result<T> {
+  final T value;
+  const Success(this.value);
+}
+
+class Error<T> extends Result<T> {
+  final String message;
+  const Error(this.message);
+}
+
+void main() {
+  Result<String> result = Success('Data loaded');
+  
+  switch (result) {
+    case Success(value: var data):
+      print('Success: $data');
+    case Error(message: var msg):
+      print('Error: $msg');
+  };
+}
+```
+
+#### Extension Methods
+
+Add functionality to existing classes without modifying them.
+
+```dart
+extension StringExtensions on String {
+  bool get isEmail => contains('@') && contains('.');
+  
+  String get capitalizeFirst {
+    if (isEmpty) return this;
+    return this[0].toUpperCase() + substring(1);
+  }
+  
+  String reverse() => split('').reversed.join('');
+  
+  int get wordCount => trim().isEmpty ? 0 : split(' ').length;
+}
+
+extension ListExtensions<T> on List<T> {
+  T? get firstOrNull => isEmpty ? null : first;
+  T? get lastOrNull => isEmpty ? null : last;
+  
+  List<T> get unique => {...this}.toList();
+  
+  void addIfNotNull(T? item) {
+    if (item != null) add(item);
+  }
+}
+
+void main() {
+  String email = 'user@example.com';
+  String text = 'hello world';
+  
+  print('Is email: ${email.isEmail}');
+  print('Capitalized: ${text.capitalizeFirst}');
+  print('Reversed: ${text.reverse()}');
+  print('Word count: ${text.wordCount}');
+  
+  List<int> numbers = [1, 2, 2, 3, 3, 3];
+  print('Unique numbers: ${numbers.unique}');
+  print('First or null: ${numbers.firstOrNull}');
+}
+```
+
 ### **Module 8: Asynchronous Programming**
+
 * **Topic 8.1: Core Concepts**
     * [ ] Understanding the event loop
     * [ ] Working with `Future` for one-time async results
     * [ ] Using `async` and `await` for clean code
+
+#### Understanding Futures and Async/Await
+
+```dart
+import 'dart:async';
+import 'dart:math';
+
+// Simulate network delay
+Future<String> fetchUserData(String userId) async {
+  print('Fetching user data for $userId...');
+  await Future.delayed(Duration(seconds: 2));
+  
+  if (Random().nextBool()) {
+    return 'User data for $userId';
+  } else {
+    throw Exception('Failed to fetch user data');
+  }
+}
+
+Future<List<String>> fetchMultipleUsers(List<String> userIds) async {
+  List<String> results = [];
+  
+  for (String id in userIds) {
+    try {
+      String userData = await fetchUserData(id);
+      results.add(userData);
+    } catch (e) {
+      results.add('Error: $e');
+    }
+  }
+  
+  return results;
+}
+
+void main() async {
+  print('Starting async operations...');
+  
+  try {
+    // Single async operation
+    String user = await fetchUserData('123');
+    print('Received: $user');
+    
+    // Multiple async operations
+    List<String> users = await fetchMultipleUsers(['1', '2', '3']);
+    users.forEach(print);
+    
+  } catch (e) {
+    print('Error: $e');
+  }
+  
+  print('Program completed');
+}
+```
+
 * **Topic 8.2: Advanced Asynchrony**
     * [ ] Handling data sequences with `Stream`
     * [ ] True parallelism with `Isolates`
     * [ ] Lazy value generation with `sync*`/`async*` (Generators)
 
+#### Streams and Generators
+
+```dart
+import 'dart:async';
+
+// Stream generator
+Stream<int> countStream(int max) async* {
+  for (int i = 1; i <= max; i++) {
+    await Future.delayed(Duration(milliseconds: 500));
+    yield i;
+  }
+}
+
+// Sync generator
+Iterable<int> fibonacci(int n) sync* {
+  int a = 0, b = 1;
+  for (int i = 0; i < n; i++) {
+    yield a;
+    int temp = a + b;
+    a = b;
+    b = temp;
+  }
+}
+
+void main() async {
+  print('Stream example:');
+  await for (int value in countStream(5)) {
+    print('Received: $value');
+  }
+  
+  print('\nFibonacci sequence:');
+  for (int value in fibonacci(10)) {
+    print(value);
+  }
+}
+```
+
 ### **Module 9: Null Safety**
+
 * **Topic 9.1: Understanding the System**
     * [ ] The principle of sound null safety
     * [ ] Nullable (`?`) vs. non-nullable types
+
 * **Topic 9.2: Practical Application**
     * [ ] Type promotion and flow analysis
     * [ ] Using the assertion (`!`) and `late` keywords safely
 
+#### Null Safety in Practice
+
+```dart
+class User {
+  String name;
+  String? email; // Nullable
+  late String id; // Late initialization
+  
+  User(this.name, {this.email});
+  
+  void initializeId() {
+    id = 'user_${name.toLowerCase().replaceAll(' ', '_')}';
+  }
+  
+  String getDisplayName() {
+    // Type promotion - Dart knows email is not null inside this block
+    if (email != null) {
+      return '$name (${email!.split('@')[0]})';
+    }
+    return name;
+  }
+  
+  void sendEmail(String message) {
+    // Null-aware operator
+    email?.isNotEmpty == true 
+        ? print('Sending email to $email: $message')
+        : print('No email available for $name');
+  }
+}
+
+void main() {
+  User user1 = User('John Doe', email: 'john@example.com');
+  User user2 = User('Jane Smith'); // No email
+  
+  user1.initializeId();
+  user2.initializeId();
+  
+  print(user1.getDisplayName());
+  print(user2.getDisplayName());
+  
+  user1.sendEmail('Welcome!');
+  user2.sendEmail('Welcome!');
+}
+```
+
 ### **Module 10: Modern Dart Features**
+
 * **Topic 10.1: Records & Patterns**
     * [ ] Returning multiple values with Records
     * [ ] Destructuring data with patterns
     * [ ] Advanced logic with pattern matching (`switch`, `if-case`)
+
+#### Records and Pattern Matching
+
+```dart
+// Function returning multiple values using records
+(String, int, bool) getUserInfo(String userId) {
+  // Simulate database lookup
+  return ('John Doe', 25, true); // (name, age, isActive)
+}
+
+// Pattern matching with switch expressions
+String categorizeAge(int age) => switch (age) {
+  < 13 => 'Child',
+  >= 13 && < 20 => 'Teenager',
+  >= 20 && < 60 => 'Adult',
+  _ => 'Senior'
+};
+
+void main() {
+  // Record destructuring
+  var (name, age, isActive) = getUserInfo('123');
+  print('User: $name, Age: $age, Active: $isActive');
+  
+  // Pattern matching with switch
+  List<dynamic> data = ['Alice', 30, true];
+  
+  switch (data) {
+    case [String name, int age, bool active] when age >= 18:
+      print('Adult user: $name');
+    case [String name, int age, bool active]:
+      print('Minor user: $name');
+    default:
+      print('Invalid data format');
+  }
+  
+  print('Age category: ${categorizeAge(age)}');
+}
+```
+
 * **Topic 10.2: Error Handling**
     * [ ] Managing exceptions with `try`, `catch`, `finally`, and `throw`
 
+#### Exception Handling
+
+```dart
+class CustomException implements Exception {
+  final String message;
+  CustomException(this.message);
+  
+  @override
+  String toString() => 'CustomException: $message';
+}
+
+int divide(int a, int b) {
+  if (b == 0) {
+    throw CustomException('Division by zero is not allowed');
+  }
+  return a ~/ b;
+}
+
+void main() {
+  List<List<int>> testCases = [
+    [10, 2],
+    [15, 3],
+    [8, 0], // This will throw an exception
+    [20, 4]
+  ];
+  
+  for (var testCase in testCases) {
+    try {
+      int result = divide(testCase[0], testCase[1]);
+      print('${testCase[0]} ÷ ${testCase[1]} = $result');
+    } on CustomException catch (e) {
+      print('Custom error: $e');
+    } catch (e) {
+      print('Unexpected error: $e');
+    } finally {
+      print('Division operation completed');
+    }
+  }
+}
+```
+
 ### **Module 11: The Dart Ecosystem**
+
 * **Topic 11.1: Libraries and Packages**
     * [ ] Organizing code with `library`, `import`, and `export`
     * [ ] Using the `pub` package manager and `pubspec.yaml`
+
+#### Libraries and Package Management
+
+```yaml
+# pubspec.yaml example
+name: my_dart_project
+description: A sample Dart project
+version: 1.0.0
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  http: ^1.1.0
+  json_annotation: ^4.8.1
+
+dev_dependencies:
+  test: ^1.24.0
+  build_runner: ^2.4.7
+```
+
+```dart
+// lib/utils/math_utils.dart
+library math_utils;
+
+export 'src/calculator.dart';
+export 'src/geometry.dart';
+
+// lib/utils/src/calculator.dart
+class Calculator {
+  static double add(double a, double b) => a + b;
+  static double multiply(double a, double b) => a * b;
+}
+
+// main.dart
+import 'package:http/http.dart' as http;
+import 'lib/utils/math_utils.dart';
+
+void main() async {
+  // Using imported package
+  var response = await http.get(Uri.parse('https://api.example.com/data'));
+  print('Response status: ${response.statusCode}');
+  
+  // Using local library
+  double result = Calculator.add(5.0, 3.0);
+  print('5 + 3 = $result');
+}
+```
+
 * **Topic 11.2: Core Libraries**
     * [ ] Exploring key libraries: `dart:core`, `dart:math`, `dart:convert`, `dart:io`
 
+#### Core Libraries Usage
+
+```dart
+import 'dart:math' as math;
+import 'dart:convert';
+import 'dart:io';
+
+void main() async {
+  // dart:math
+  print('Random number: ${math.Random().nextInt(100)}');
+  print('Sin(45°): ${math.sin(math.pi / 4)}');
+  print('Max of 5 and 10: ${math.max(5, 10)}');
+  
+  // dart:convert
+  Map<String, dynamic> user = {'name': 'John', 'age': 30};
+  String jsonString = jsonEncode(user);
+  Map<String, dynamic> decoded = jsonDecode(jsonString);
+  print('JSON: $jsonString');
+  print('Decoded: $decoded');
+  
+  // dart:io (example - file operations)
+  File file = File('example.txt');
+  await file.writeAsString('Hello, Dart!');
+  String content = await file.readAsString();
+  print('File content: $content');
+  await file.delete();
+}
+```
+
 ### **Module 12: Tooling & Platform Integration**
+
 * **Topic 12.1: The Professional Toolchain**
     * [ ] Using command-line tools (`run`, `compile`, `format`, `analyze`)
     * [ ] Writing and running tests with `dart test`
     * [ ] Debugging and profiling with Dart DevTools
+
+#### Command Line Tools
+
+```bash
+# Running Dart code
+dart run main.dart
+
+# Formatting code
+dart format .
+
+# Analyzing code
+dart analyze
+
+# Compiling to executable
+dart compile exe main.dart
+
+# Running tests
+dart test
+
+# Getting dependencies
+dart pub get
+
+# Creating new project
+dart create my_project
+```
+
+#### Testing Example
+
+```dart
+// test/calculator_test.dart
+import 'package:test/test.dart';
+import '../lib/calculator.dart';
+
+void main() {
+  group('Calculator tests', () {
+    test('addition works correctly', () {
+      expect(Calculator.add(2, 3), equals(5));
+      expect(Calculator.add(-1, 1), equals(0));
+    });
+    
+    test('multiplication works correctly', () {
+      expect(Calculator.multiply(4, 5), equals(20));
+      expect(Calculator.multiply(0, 10), equals(0));
+    });
+  });
+}
+```
+
 * **Topic 12.2: Platform Interoperability**
     * [ ] Calling C code with Foreign Function Interface (FFI)
     * [ ] Interacting with Kotlin/Java and Swift/Objective-C code
 
+#### FFI Example
+
+```dart
+import 'dart:ffi';
+import 'dart:io';
+
+// C function signature: int add(int a, int b)
+typedef AddC = Int32 Function(Int32 a, Int32 b);
+typedef AddDart = int Function(int a, int b);
+
+void main() {
+  // Load the dynamic library
+  final dylib = Platform.isWindows 
+      ? DynamicLibrary.open('math_lib.dll')
+      : DynamicLibrary.open('libmath_lib.so');
+  
+  // Look up the function
+  final add = dylib.lookupFunction<AddC, AddDart>('add');
+  
+  // Call the C function
+  final result = add(5, 3);
+  print('5 + 3 = $result');
+}
+```
+
 ### **Module 13: Best Practices & Next Steps**
+
 * **Topic 13.1: Writing Quality Code**
     * [ ] Following the "Effective Dart" style and usage guides
+
+#### Effective Dart Guidelines
+
+```dart
+// Good: Use clear, descriptive names
+class UserRepository {
+  final HttpClient _httpClient;
+  
+  UserRepository(this._httpClient);
+  
+  // Good: Use async/await for readability
+  Future<User> fetchUser(String id) async {
+    try {
+      final response = await _httpClient.get('/users/$id');
+      return User.fromJson(response.data);
+    } on HttpException catch (e) {
+      throw UserNotFoundException('User $id not found: ${e.message}');
+    }
+  }
+  
+  // Good: Use meaningful parameter names
+  Future<List<User>> searchUsers({
+    required String query,
+    int limit = 10,
+    int offset = 0,
+  }) async {
+    // Implementation
+    return [];
+  }
+}
+
+// Good: Document public APIs
+/// Represents a user in the system.
+/// 
+/// Contains basic information like name, email, and creation date.
+class User {
+  final String id;
+  final String name;
+  final String email;
+  final DateTime createdAt;
+  
+  const User({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.createdAt,
+  });
+  
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      email: json['email'] as String,
+      createdAt: DateTime.parse(json['created_at'] as String),
+    );
+  }
+}
+```
+
 * **Topic 13.2: Compilation and Deployment**
     * [ ] Understanding JIT (development) vs. AOT (production) compilation
+
+#### Compilation Types
+
+```dart
+// Development (JIT - Just In Time)
+// - Fast startup
+// - Hot reload support
+// - Larger memory usage
+// Command: dart run main.dart
+
+// Production (AOT - Ahead Of Time)  
+// - Optimized performance
+// - Smaller runtime footprint
+// - No hot reload
+// Commands:
+// dart compile exe main.dart        # Native executable
+// dart compile js main.dart         # JavaScript (web)
+// dart compile aot-snapshot main.dart # AOT snapshot
+
+void main() {
+  print('Dart compilation demonstration');
+  print('JIT: Great for development');
+  print('AOT: Perfect for production');
+}
+```
+
 * **Topic 13.3: Where to Go Next**
     * [ ] Applying Dart skills to build applications with **Flutter**
+
+#### Next Steps with Flutter
+
+```dart
+// Example Flutter app structure using Dart concepts learned
+
+import 'package:flutter/material.dart';
+
+// Using classes and inheritance
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Dart to Flutter',
+      home: UserListScreen(),
+    );
+  }
+}
+
+// Using async programming
+class UserListScreen extends StatefulWidget {
+  @override
+  _UserListScreenState createState() => _UserListScreenState();
+}
+
+class _UserListScreenState extends State<UserListScreen> {
+  List<User> users = [];
+  bool isLoading = true;
+  
+  @override
+  void initState() {
+    super.initState();
+    loadUsers();
+  }
+  
+  Future<void> loadUsers() async {
+    try {
+      // Using the concepts learned in previous modules
+      final repository = UserRepository(HttpClient());
+      final fetchedUsers = await repository.fetchAllUsers();
+      
+      setState(() {
+        users = fetchedUsers;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      // Handle error
+    }
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Users')),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: users.length,
+              itemBuilder: (context, index) {
+                final user = users[index];
+                return ListTile(
+                  title: Text(user.name),
+                  subtitle: Text(user.email),
+                );
+              },
+            ),
+    );
+  }
+}
+
+void main() {
+  runApp(MyApp());
+}
+```
+
+---
+
+## **Congratulations! 🎉**
+
+You've completed the comprehensive Dart learning roadmap! You now have:
+
+- **Solid foundations** in Dart syntax and concepts
+- **Object-oriented programming** skills
+- **Asynchronous programming** knowledge
+- **Modern Dart features** understanding
+- **Best practices** for writing quality code
+
+### **What's Next?**
+
+1. **Build Projects**: Create CLI tools, web servers, or scripts using Dart
+2. **Learn Flutter**: Apply your Dart skills to mobile app development
+3. **Explore Advanced Topics**: Study design patterns, state management, and architecture
+4. **Join the Community**: Participate in Dart and Flutter communities
+5. **Keep Learning**: Stay updated with new Dart features and best practices
+
+### **Resources for Continued Learning:**
+
+- [Dart Language Tour](https://dart.dev/language)
+- [Effective Dart](https://dart.dev/effective-dart)
+- [Flutter Documentation](https://flutter.dev/docs)
+- [Dart Packages](https://pub.dev)
+- [DartPad Online IDE](https://dartpad.dev)
+
+Happy coding with Dart! 🚀
