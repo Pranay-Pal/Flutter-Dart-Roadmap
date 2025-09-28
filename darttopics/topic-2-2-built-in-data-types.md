@@ -1,258 +1,209 @@
 # Topic 2.2: Built-in Data Types
 
-[⬅ Previous](topic-2-1-variables-data.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-2-3-operators.md)
+[⬅ Previous](topic-2-1-variables-data.md) · [🏠 Roadmap](../The-Dart-Roadmap.md) · [Next ➡](topic-2-3-operators.md)
 
-    * [ ] Numbers (`int`, `double`, `num`)
-    * [ ] Strings (`String`) and interpolation
-    * [ ] Booleans (`bool`)
+Dart is a type-safe language, and it comes with a set of fundamental data types that are used to represent numbers, text, and true/false values. Understanding these core types is essential for building any Dart application.
 
-#### Numbers (`int`, `double`, `num`)
+This topic explores the most common built-in data types you'll encounter in everyday Dart programming.
 
-Dart has three main numeric types for handling different kinds of numbers.
+---
 
-**Integers (`int`):**
+### 1. Numbers (`int`, `double`, and `num`)
+
+Dart provides three main numeric types to handle whole numbers, decimal numbers, and cases where either might be used.
+
+#### `int` - For Whole Numbers
+
+An `int` represents an integer value. It can be positive, negative, or zero.
+
 ```dart
 void main() {
-  int wholeNumber = 42;
-  int negative = -17;
-  int large = 1000000;
-  
-  print('Whole number: $wholeNumber');
-  print('Negative: $negative');
-  print('Large: $large');
-  
-  // Integer operations
-  int a = 10;
-  int b = 3;
-  print('Addition: ${a + b}');      // 13
-  print('Subtraction: ${a - b}');   // 7
-  print('Multiplication: ${a * b}'); // 30
-  print('Integer division: ${a ~/ b}'); // 3
-  print('Remainder: ${a % b}');     // 1
+  // Declaring integer variables
+  int score = 100;
+  int temperature = -5;
+  int altitude = 0;
+
+  print('Player score: $score');
+  print('Temperature outside: $temperature°C');
+
+  // Integers have a fixed size, but it's large enough for most use cases.
+  // On native platforms, values can be from -2^63 to 2^63 - 1.
+  // When compiled to JavaScript, they are standard JavaScript numbers.
 }
 ```
 
-**Doubles (`double`):**
+#### `double` - For Decimal Numbers
+
+A `double` represents a 64-bit floating-point number, which means it can hold values with a decimal point.
+
 ```dart
 void main() {
-  double decimal = 3.14;
-  double scientific = 1.42e5; // 142000.0
-  double small = 0.0001;
-  
-  print('Decimal: $decimal');
-  print('Scientific: $scientific');
-  print('Small: $small');
-  
-  // Double operations
-  double x = 10.5;
-  double y = 3.2;
-  print('Addition: ${x + y}');      // 13.7
-  print('Division: ${x / y}');      // 3.28125
-  print('Rounded: ${(x / y).round()}'); // 3
+  // Declaring double variables
+  double pi = 3.14159;
+  double price = 19.99;
+  double scientific = 1.23e5; // Represents 1.23 * 10^5, or 123000.0
+
+  print('The value of pi is approximately $pi.');
+  print('The item costs $$price.');
+  print('A large number: $scientific');
 }
 ```
 
-**The `num` type (supertype of int and double):**
+#### `num` - For Any Number Type
+
+`num` is a special type that can hold both `int` and `double` values. This is useful when you need to write a function or a variable that can accept either type of number.
+
 ```dart
 void main() {
-  num number1 = 42;      // Can hold int
-  num number2 = 3.14;    // Can hold double
-  
-  print('Number 1: $number1 (${number1.runtimeType})');
-  print('Number 2: $number2 (${number2.runtimeType})');
-  
-  // Useful for functions that accept both int and double
-  printNumber(42);
-  printNumber(3.14);
-}
+  // `num` can be an integer.
+  num myNumber = 42;
+  print('myNumber is an ${myNumber.runtimeType}'); // Output: myNumber is an int
 
-void printNumber(num value) {
-  print('The number is: $value');
-  
-  if (value is int) {
-    print('It\'s an integer');
-  } else if (value is double) {
-    print('It\'s a double');
+  // It can also be a double.
+  myNumber = 3.14;
+  print('myNumber is now a ${myNumber.runtimeType}'); // Output: myNumber is now a double
+
+  // This is useful for functions that work with both types.
+  void printAnyNumber(num number) {
+    print('The number is $number.');
   }
+
+  printAnyNumber(100);    // Works with int
+  printAnyNumber(99.5); // Works with double
 }
 ```
 
-**Number parsing and conversion:**
+#### Converting Between Number Types and Parsing from Strings
+
+You often need to convert data between types, especially when handling user input, which usually comes as a `String`.
+
 ```dart
 void main() {
-  // String to number
-  String intString = '42';
-  String doubleString = '3.14';
-  
-  int parsedInt = int.parse(intString);
-  double parsedDouble = double.parse(doubleString);
-  
-  print('Parsed int: $parsedInt');
-  print('Parsed double: $parsedDouble');
-  
-  // Number to string
-  int number = 42;
-  String numberAsString = number.toString();
-  print('Number as string: $numberAsString');
-  
-  // Handle parsing errors
-  String invalidNumber = 'abc';
-  int? result = int.tryParse(invalidNumber);
-  print('Parsed result: $result'); // null
+  // 1. String to int
+  var one = int.parse('1');
+  print('Parsed string "1" to int: $one');
+
+  // 2. String to double
+  var onePointOne = double.parse('1.1');
+  print('Parsed string "1.1" to double: $onePointOne');
+
+  // 3. int to String
+  String oneAsString = 1.toString();
+  print('Converted int 1 to string: "$oneAsString"');
+
+  // 4. double to String, with a specific number of decimal places
+  String piAsString = 3.14159.toStringAsFixed(2);
+  print('Pi as a string with 2 decimal places: "$piAsString"'); // "3.14"
 }
 ```
 
-#### Strings (`String`) and Interpolation
+> **Error Handling:** If you try to parse a string that isn't a valid number (e.g., `int.parse('hello')`), your program will crash. For safer parsing, use `tryParse`, which returns `null` on failure.
+>
+> ```dart
+> var result = int.tryParse('1a'); // Returns null
+> print('Result of trying to parse "1a": $result');
+> ```
 
-Strings are sequences of characters used to represent text in Dart.
+---
 
-**Basic string creation:**
+### 2. Strings (`String`) and Interpolation
+
+A `String` is a sequence of characters. In Dart, you can create strings using single (`'`) or double (`"`) quotes.
+
 ```dart
 void main() {
-  String singleQuotes = 'Hello, World!';
-  String doubleQuotes = "Hello, Dart!";
-  String multiLine = '''
-    This is a 
-    multi-line 
-    string
-  ''';
-  
-  print(singleQuotes);
-  print(doubleQuotes);
-  print(multiLine);
+  String greeting = 'Hello, Dart!';
+  String message = "It's a beautiful day.";
+
+  print(greeting);
+  print(message);
 }
 ```
 
-**String interpolation:**
+#### String Interpolation
+
+String interpolation is the recommended way to embed the values of variables or expressions inside a string. Use `$variableName` for simple variables and `${expression}` for more complex expressions.
+
 ```dart
 void main() {
-  String name = 'Alice';
-  int age = 25;
-  double height = 5.6;
-  
-  // Simple interpolation with $
-  print('Name: $name');
-  print('Age: $age');
-  
-  // Complex expressions with ${}
-  print('Next year I will be ${age + 1}');
-  print('Height in cm: ${height * 30.48}');
-  print('Uppercase name: ${name.toUpperCase()}');
-  
-  // Escaping special characters
-  print('Price: \$${10.99}');
-  print('Quote: "Hello, $name!"');
+  String name = 'Maria';
+  int items = 5;
+  double totalCost = 75.50;
+
+  // Simple interpolation
+  String message = 'Hello, $name! You have $items items in your cart.';
+  print(message);
+
+  // Interpolation with an expression
+  String summary = 'The total cost is \$${totalCost.toStringAsFixed(2)}.';
+  print(summary);
+
+  // You can even call methods inside the expression
+  print('Your name in uppercase is ${name.toUpperCase()}.');
 }
 ```
 
-**String operations:**
+#### Multi-Line Strings
+
+To create a string that spans multiple lines, use triple quotes (either `'''` or `"""`).
+
 ```dart
 void main() {
-  String text = 'Hello, Dart Programming';
-  
-  // Length
-  print('Length: ${text.length}');
-  
-  // Case conversion
-  print('Uppercase: ${text.toUpperCase()}');
-  print('Lowercase: ${text.toLowerCase()}');
-  
-  // Substring
-  print('Substring: ${text.substring(0, 5)}'); // "Hello"
-  
-  // Contains
-  print('Contains "Dart": ${text.contains("Dart")}'); // true
-  
-  // Replace
-  print('Replace: ${text.replaceAll("Dart", "Flutter")}');
-  
-  // Split
-  List<String> words = text.split(' ');
-  print('Words: $words');
-  
-  // Trim whitespace
-  String padded = '  Hello  ';
-  print('Trimmed: "${padded.trim()}"');
+  String multiLinePoem = '''
+A world of code,
+In Dart it's told,
+Simple and clear,
+A story unfolds.
+''';
+  print(multiLinePoem);
 }
 ```
 
-**Raw strings and escape sequences:**
+#### Raw Strings
+
+A "raw" string (prefixed with `r`) treats all characters literally, ignoring special characters like `\n` (newline) or `\t` (tab). This is useful for regular expressions or file paths.
+
 ```dart
 void main() {
-  // Raw strings (prefix with r)
-  String rawString = r'This is a raw string with \n \t special characters';
-  print(rawString);
-  
-  // Regular strings with escape sequences
-  String escapedString = 'Line 1\nLine 2\tTabbed';
-  print(escapedString);
-  
-  // Unicode
-  String unicode = 'Emoji: \u{1F600}'; // 😀
-  print(unicode);
+  // A regular string with a newline character
+  String withNewline = 'First line\nSecond line';
+  print('Regular string:\n$withNewline');
+
+  // A raw string ignores the \n
+  String rawString = r'First line\nSecond line';
+  print('\nRaw string:\n$rawString');
 }
 ```
 
-#### Booleans (`bool`)
+---
 
-Booleans represent true or false values, essential for logical operations and control flow.
+### 3. Booleans (`bool`)
 
-**Basic boolean usage:**
+The `bool` type represents a boolean value: either `true` or `false`. Booleans are essential for controlling the flow of your program (e.g., in `if` statements and loops).
+
 ```dart
 void main() {
-  bool isActive = true;
-  bool isComplete = false;
-  
-  print('Is active: $isActive');
-  print('Is complete: $isComplete');
-  
-  // Boolean from expressions
+  // Declaring boolean variables
+  bool isLoggedIn = true;
+  bool isCompleted = false;
+  bool hasErrors = false;
+
+  print('User is logged in: $isLoggedIn');
+
+  // Booleans are often the result of a comparison
   int score = 85;
-  bool isPassing = score >= 60;
-  print('Is passing: $isPassing');
-  
-  bool isHighScore = score > 90;
-  print('Is high score: $isHighScore');
-}
-```
+  bool isPassing = score >= 60; // The expression `score >= 60` evaluates to true
+  print('Is the score passing? $isPassing');
 
-**Logical operations:**
-```dart
-void main() {
-  bool a = true;
-  bool b = false;
-  
-  // AND operator (&&)
-  print('$a && $b = ${a && b}'); // false
-  
-  // OR operator (||)
-  print('$a || $b = ${a || b}'); // true
-  
-  // NOT operator (!)
-  print('!$a = ${!a}'); // false
-  print('!$b = ${!b}'); // true
-}
-```
-
-**Boolean in conditions:**
-```dart
-void main() {
-  int temperature = 75;
-  bool isSunny = true;
-  bool isWeekend = false;
-  
-  bool goodWeatherForPicnic = temperature > 70 && isSunny;
-  bool canGoPicnic = goodWeatherForPicnic && isWeekend;
-  
-  print('Good weather: $goodWeatherForPicnic');
-  print('Can go picnic: $canGoPicnic');
-  
-  if (canGoPicnic) {
-    print('Let\'s go for a picnic!');
+  // Using booleans in an if statement
+  if (isLoggedIn && !hasErrors) {
+    print('Welcome back! You can proceed.');
   } else {
-    print('Maybe next time...');
+    print('Please log in or fix the errors.');
   }
 }
 ```
 
-[⬅ Previous](topic-2-1-variables-data.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-2-3-operators.md)
+In Dart, only the boolean value `true` is treated as true. Unlike some other languages, values like `1` or a non-empty string are not automatically treated as true. This strictness helps prevent subtle bugs.
+
+[⬅ Previous](topic-2-1-variables-data.md) · [🏠 Roadmap](../The-Dart-Roadmap.md) · [Next ➡](topic-2-3-operators.md)

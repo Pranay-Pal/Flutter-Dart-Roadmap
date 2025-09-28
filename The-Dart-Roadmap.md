@@ -1,3 +1,4 @@
+
 # The Definitive Dart Learning Roadmap
 
 A complete, structured guide to learning the Dart programming language from the ground up, covering all major topics from the official documentation. This roadmap is designed for beginners and those looking for a comprehensive review of the Dart platform.
@@ -123,6 +124,7 @@ Each topic is now available as a separate, detailed markdown file for focused le
     * [ ] Enhanced enums
     * [ ] Class modifiers
     * [ ] Extension methods
+    * [ ] Operator overloading
 
 ---
 
@@ -181,17 +183,90 @@ Each topic is now available as a separate, detailed markdown file for focused le
 
 ---
 
-## **Module 13: Best Practices & Next Steps**
+## **Module 13: A Deep Dive into Dart's Core Libraries & Packages**
 
-* **[Topic 13.1: Writing Quality Code](darttopics/topic-13-1-writing-quality-code.md)**
+A detailed exploration of Dart's powerful built-in libraries and essential third-party packages that form the foundation of modern Dart development.
+
+* **[Topic 13.1: Core Essentials (`dart:core`)](darttopics/topic-13-1-core-essentials.md)**
+    * [ ] Working with Time: `DateTime` and `Duration`.
+    * [ ] Parsing and Building URIs: The `Uri` class.
+    * [ ] Advanced Pattern Matching with `RegExp`.
+    * [ ] Measuring Code Performance with `Stopwatch`.
+    * [ ] Object and Error base classes.
+
+* **[Topic 13.2: Advanced Math and Data (`dart:math` & `dart:typed_data`)](darttopics/topic-13-2-math-and-data.md)**
+    * [ ] Advanced Math: `Random`, `Point`, `Rectangle`, and trigonometric functions.
+    * [ ] Typed Data: Understanding `ByteBuffer`, `TypedData`, and `Uint8List` for performance-critical operations.
+
+* **[Topic 13.3: Specialized Collections (`package:collection`)](darttopics/topic-13-3-specialized-collections.md)**
+    * [ ] Equality and Hashing: `DeepCollectionEquality`, `IterableEquality`.
+    * [ ] Advanced List/Iterable Manipulation: `firstWhereOrNull`, grouping, and more.
+    * [ ] Specialized Queues and Views: `Queue`, `ListQueue`, `UnmodifiableListView`.
+    * [ ] Priority queues and other data structures.
+
+* **[Topic 13.4: Data Encoding and Decoding (`dart:convert`)](darttopics/topic-13-4-data-conversion.md)**
+    * [ ] Mastering JSON: `jsonEncode`, `jsonDecode`, and the `JsonCodec`.
+    * [ ] Working with Character Sets: `utf8`, `latin1`, and `base64` encoding/decoding.
+    * [ ] Building Custom Converters with the `Converter` class.
+    * [ ] Line-by-line stream conversion.
+
+* **[Topic 13.5: Advanced Asynchronous Programming (`dart:async`)](darttopics/topic-13-5-advanced-async.md)**
+    * [ ] `Future` Management: `Future.wait`, `Future.any`, `Future.microtask`.
+    * [ ] Stream Control: `StreamController` (single subscription vs. broadcast).
+    * [ ] Transforming Streams with `StreamTransformer`.
+    * [ ] Scheduling Tasks with `Timer` and `Zone`.
+
+* **[Topic 13.6: Input/Output (`dart:io`) - Part 1: Files, Processes, and Platform](darttopics/topic-13-6-io-files-processes.md)**
+    * [ ] File System Access: Reading and writing files with `File`.
+    * [ ] Directory and Link Management: `Directory` and `Link`.
+    * [ ] Running External Processes with `Process.run` and `Process.start`.
+    * [ ] Accessing Platform Information: `Platform` class for OS detection.
+
+* **[Topic 13.7: Input/Output (`dart:io`) - Part 2: Networking](darttopics/topic-13-7-io-networking.md)**
+    * [ ] Low-Level HTTP: Building clients with `HttpClient`.
+    * [ ] Real-Time Communication: `WebSocket` clients and servers.
+    * [ ] Working with TCP Sockets: `Socket` and `ServerSocket`.
+
+* **[Topic 13.8: True Concurrency with `dart:isolate`](darttopics/topic-13-8-isolates.md)**
+    * [ ] Understanding Isolate Memory Isolation.
+    * [ ] Spawning Isolates with `Isolate.spawn` and `Isolate.run`.
+    * [ ] Two-Way Communication using `ReceivePort` and `SendPort`.
+    * [ ] Handling errors across isolates.
+
+* **[Topic 13.9: Developer and Debugging Tools (`dart:developer` & `dart:mirrors`)](darttopics/topic-13-9-developer-tools.md)**
+    * [ ] Logging and Inspection with `dart:developer` (`log`, `inspect`, `debugger`).
+    * [ ] Introspection and Reflection with `dart:mirrors` (and its limitations).
+
+* **[Topic 13.10: Essential Third-Party Packages](darttopics/topic-13-10-third-party-packages.md)**
+    * [ ] User-Friendly HTTP Requests with `package:http`.
+    * [ ] Platform-Independent File Paths with `package:path`.
+    * [ ] High-level WebSocket communication with `package:web_socket_channel`.
+    * [ ] Enforcing Code Quality with `package:lints`.
+
+* **[Topic 13.11: Server-Side Dart with `package:shelf`](darttopics/topic-13-11-server-side-dart.md)**
+    * [ ] Creating a Basic Web Server with `package:shelf`.
+    * [ ] Routing Requests with `package:shelf_router`.
+    * [ ] Handling WebSockets with `package:shelf_web_socket`.
+
+* **[Topic 13.12: Building Command-Line Applications](darttopics/topic-13-12-command-line-apps.md)**
+    * [ ] Parsing Command-Line Arguments with `package:args`.
+    * [ ] Automatically Generating Documentation with `package:dartdoc`.
+    * [ ] Reading Configuration Files with `package:cli_config`.
+    * [ ] Common CLI Utilities with `package:cli_util`.
+
+---
+
+## **Module 14: Best Practices & Next Steps**
+
+* **[Topic 14.1: Writing Quality Code](darttopics/topic-14-1-writing-quality-code.md)**
     * [ ] Applying "Effective Dart" style and documentation guidance
     * [ ] Enforcing best practices with `analysis_options.yaml`
 
-* **[Topic 13.2: Compilation and Deployment](darttopics/topic-13-2-compilation-and-deployment.md)**
+* **[Topic 14.2: Compilation and Deployment](darttopics/topic-14-2-compilation-and-deployment.md)**
     * [ ] Understanding Dart's JIT vs. AOT compilation targets
     * [ ] Packaging Dart apps for deployment (e.g., Docker)
 
-* **[Topic 13.3: Where to Go Next](darttopics/topic-13-3-where-to-go-next.md)**
+* **[Topic 14.3: Where to Go Next](darttopics/topic-14-3-where-to-go-next.md)**
     * [ ] Applying Dart skills to build applications with **Flutter**
     * [ ] Planning advanced learning paths and contributions
 

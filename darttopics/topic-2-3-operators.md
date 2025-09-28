@@ -1,238 +1,234 @@
 # Topic 2.3: Operators
 
-[⬅ Previous](topic-2-2-built-in-data-types.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-3-1-conditional-statements.md)
+[⬅ Previous](topic-2-2-built-in-data-types.md) · [🏠 Roadmap](../The-Dart-Roadmap.md) · [Next ➡](topic-3-1-conditional-statements.md)
 
-  * [ ] Arithmetic, equality, relational, and logical operators
-  * [ ] Type test (`is`, `is!`), cascade (`..`), and conditional operators
+**Operators** are special symbols that perform operations on values (called operands). For example, in `5 + 3`, the `+` is the operator and `5` and `3` are the operands.
 
-#### Arithmetic Operators
+Dart provides a rich set of operators to handle everything from basic math to complex logical comparisons. Understanding them is key to writing expressive and concise code.
 
-Arithmetic operators perform mathematical operations on numbers.
+---
 
-```dart
-void main() {
-  int a = 10;
-  int b = 3;
-  double x = 10.5;
-  double y = 3.2;
-  
-  // Basic arithmetic
-  print('Addition: $a + $b = ${a + b}');           // 13
-  print('Subtraction: $a - $b = ${a - b}');        // 7
-  print('Multiplication: $a * $b = ${a * b}');     // 30
-  print('Division: $x / $y = ${x / y}');           // 3.28125
-  print('Integer division: $a ~/ $b = ${a ~/ b}'); // 3
-  print('Modulo: $a % $b = ${a % b}');             // 1
-  
-  // Unary operators
-  print('Unary minus: -$a = ${-a}');               // -10
-  print('Unary plus: +$a = ${+a}');                // 10
-  
-  // Increment and decrement
-  int counter = 5;
-  print('Original counter: $counter');             // 5
-  print('Pre-increment: ${++counter}');            // 6
-  print('Post-increment: ${counter++}');           // 6
-  print('After post-increment: $counter');         // 7
-  print('Pre-decrement: ${--counter}');            // 6
-  print('Post-decrement: ${counter--}');           // 6
-  print('After post-decrement: $counter');         // 5
-}
-```
+### 1. Arithmetic Operators
 
-#### Equality and Relational Operators
+These are used for performing mathematical calculations.
 
-These operators compare values and return boolean results.
+| Operator | Description        | Example         | Result |
+| :------- | :----------------- | :-------------- | :----- |
+| `+`      | Addition           | `5 + 2`         | `7`    |
+| `-`      | Subtraction        | `5 - 2`         | `3`    |
+| `*`      | Multiplication     | `5 * 2`         | `10`   |
+| `/`      | Division           | `5 / 2`         | `2.5`  |
+| `~/`     | Integer Division   | `5 ~/ 2`        | `2`    |
+| `%`      | Modulo (remainder) | `5 % 2`         | `1`    |
+
+**Increment and Decrement Operators:**
+- `++variable`: Increments the value *before* the expression is evaluated.
+- `variable++`: Increments the value *after* the expression is evaluated.
+- `--variable`: Decrements the value *before* evaluation.
+- `variable--`: Decrements the value *after* evaluation.
 
 ```dart
 void main() {
   int a = 10;
-  int b = 5;
-  int c = 10;
   
-  // Equality operators
-  print('$a == $b: ${a == b}');     // false
-  print('$a == $c: ${a == c}');     // true
-  print('$a != $b: ${a != b}');     // true
-  print('$a != $c: ${a != c}');     // false
-  
-  // Relational operators
-  print('$a > $b: ${a > b}');       // true
-  print('$a < $b: ${a < b}');       // false
-  print('$a >= $c: ${a >= c}');     // true
-  print('$a <= $b: ${a <= b}');     // false
-  
-  // String comparison
-  String name1 = 'Alice';
-  String name2 = 'Bob';
-  String name3 = 'Alice';
-  
-  print('$name1 == $name3: ${name1 == name3}'); // true
-  print('$name1 == $name2: ${name1 == name2}'); // false
+  // Pre-increment: increments `a` to 11, then prints 11.
+  print('Pre-increment: ${++a}'); // Output: 11
+
+  // Post-increment: prints the current value of `a` (11), then increments it to 12.
+  print('Post-increment: ${a++}'); // Output: 11
+  print('After post-increment: $a'); // Output: 12
 }
 ```
 
-#### Logical Operators
+---
 
-Logical operators work with boolean values and are used for complex conditions.
+### 2. Equality and Relational Operators
+
+These operators compare two values and always return a boolean (`true` or `false`).
+
+| Operator | Description              | Example      | Result  |
+| :------- | :----------------------- | :----------- | :------ |
+| `==`     | Equal to                 | `5 == 5`     | `true`  |
+| `!=`     | Not equal to             | `5 != 3`     | `true`  |
+| `>`      | Greater than             | `5 > 3`      | `true`  |
+| `<`      | Less than                | `5 < 3`      | `false` |
+| `>=`     | Greater than or equal to | `5 >= 5`     | `true`  |
+| `<=`     | Less than or equal to    | `5 <= 3`     | `false` |
+
+```dart
+void main() {
+  int score = 95;
+  String name = 'Dart';
+
+  print(score >= 60);   // true
+  print(name == 'dart'); // false (comparison is case-sensitive)
+  print(name != 'Java'); // true
+}
+```
+
+---
+
+### 3. Logical Operators
+
+Logical operators are used to combine or invert boolean expressions.
+
+| Operator | Description                                | Example               |
+| :------- | :----------------------------------------- | :-------------------- |
+| `!`      | **NOT**: Inverts the value (true becomes false, and vice versa). | `!true` is `false`    |
+| `&&`     | **AND**: Returns `true` only if both expressions are `true`.     | `true && false` is `false` |
+| `||`     | **OR**: Returns `true` if at least one expression is `true`.      | `true || false` is `true`  |
 
 ```dart
 void main() {
   bool isRaining = false;
-  bool isCold = true;
-  bool hasUmbrella = true;
-  
-  // AND operator (&&)
-  bool stayInside = isRaining && isCold;
-  print('Stay inside: $stayInside'); // false
-  
-  // OR operator (||)
-  bool needJacket = isRaining || isCold;
-  print('Need jacket: $needJacket'); // true
-  
-  // NOT operator (!)
-  bool goodWeather = !isRaining && !isCold;
-  print('Good weather: $goodWeather'); // false
-  
-  // Complex logical expressions
-  bool canGoOut = !isRaining || (isRaining && hasUmbrella);
-  print('Can go out: $canGoOut'); // true
-}
-```
+  bool isWeekend = true;
 
-#### Type Test Operators
+  // Using AND (&&)
+  if (isWeekend && !isRaining) {
+    print('It\'s a perfect day for a picnic!');
+  }
 
-Type test operators check the type of an object at runtime.
-
-```dart
-void main() {
-  dynamic value1 = 42;
-  dynamic value2 = 'Hello';
-  dynamic value3 = [1, 2, 3];
-  
-  // 'is' operator - checks if object is of specific type
-  print('$value1 is int: ${value1 is int}');         // true
-  print('$value1 is String: ${value1 is String}');   // false
-  print('$value2 is String: ${value2 is String}');   // true
-  print('$value3 is List: ${value3 is List}');       // true
-  
-  // 'is!' operator - checks if object is NOT of specific type
-  print('$value1 is! String: ${value1 is! String}'); // true
-  print('$value2 is! int: ${value2 is! int}');       // true
-  
-  // Practical usage
-  processValue(42);
-  processValue('Hello');
-  processValue([1, 2, 3]);
-}
-
-void processValue(dynamic value) {
-  if (value is int) {
-    print('Processing integer: ${value * 2}');
-  } else if (value is String) {
-    print('Processing string: ${value.toUpperCase()}');
-  } else if (value is List) {
-    print('Processing list with ${value.length} items');
-  } else {
-    print('Unknown type: ${value.runtimeType}');
+  // Using OR (||)
+  bool hasHoliday = true;
+  if (isWeekend || hasHoliday) {
+    print('Time to relax!');
   }
 }
 ```
 
-#### Cascade Operator (`..`)
+---
 
-The cascade operator allows you to perform multiple operations on the same object.
+### 4. Type Test Operators
+
+These operators are used to check the type of an object at runtime.
+
+- `is`: Returns `true` if the object has the specified type.
+- `is!`: Returns `true` if the object does not have the specified type.
 
 ```dart
-class Person {
-  String? name;
-  int? age;
-  String? city;
-  
-  void introduce() {
-    print('Hi, I\'m $name, $age years old from $city');
+void main() {
+  void printValue(dynamic value) {
+    if (value is String) {
+      print('The value is a String: "${value.toUpperCase()}"');
+    } else if (value is int) {
+      print('The value is an integer: ${value * 2}');
+    } else {
+      print('The value is of an unknown type.');
+    }
   }
-  
-  void celebrateBirthday() {
-    age = age! + 1;
-    print('$name is now $age years old!');
+
+  printValue('Hello Dart'); // The value is a String: "HELLO DART"
+  printValue(100);         // The value is an integer: 200
+  printValue(true);        // The value is of an unknown type.
+}
+```
+
+---
+
+### 5. Assignment Operators
+
+These operators are used to assign a value to a variable.
+
+| Operator | Shorthand For... | Example         |
+| :------- | :--------------- | :-------------- |
+| `=`      | `a = b`          | `x = 10`        |
+| `+=`     | `a = a + b`      | `x += 5` (x is 15) |
+| `-=`     | `a = a - b`      | `x -= 5` (x is 5)  |
+| `*=`     | `a = a * b`      | `x *= 2` (x is 20) |
+| `??=`    | `a ??= b`        | Assign `b` to `a` only if `a` is `null`. |
+
+```dart
+void main() {
+  int a = 10;
+  a += 5; // a is now 15
+  print('a after += 5: $a');
+
+  String? name; // name is null
+  // If `name` is null, assign 'Guest' to it.
+  name ??= 'Guest';
+  print('Name: $name'); // Name: Guest
+
+  // `name` is no longer null, so this does nothing.
+  name ??= 'Admin';
+  print('Name: $name'); // Name: Guest
+}
+```
+
+---
+
+### 6. Conditional and Null-Aware Operators
+
+These operators provide concise ways to handle `null` values and conditional expressions.
+
+- **Ternary Operator (`condition ? expr1 : expr2`)**: If `condition` is true, evaluates `expr1`; otherwise, evaluates `expr2`.
+- **Null Coalescing Operator (`expr1 ?? expr2`)**: If `expr1` is not `null`, returns its value; otherwise, evaluates and returns `expr2`.
+- **Conditional Member Access (`?.`)**: Like the `.` operator, but returns `null` if the object on the left is `null` (preventing a crash).
+
+```dart
+void main() {
+  // Ternary operator
+  int age = 20;
+  String status = age >= 18 ? 'Adult' : 'Minor';
+  print('Status: $status'); // Status: Adult
+
+  // Null coalescing operator
+  String? username; // null
+  String displayName = username ?? 'Anonymous';
+  print('Display Name: $displayName'); // Display Name: Anonymous
+
+  // Conditional member access
+  String? message; // null
+  // This would crash: message.toUpperCase()
+  // This is safe and returns null:
+  print(message?.toUpperCase()); // null
+}
+```
+
+---
+
+### 7. Cascade Notation (`..`)
+
+The cascade notation allows you to perform a sequence of operations on the same object. It provides a more fluent and readable syntax than calling each method on a separate line.
+
+```dart
+class Paint {
+  String color = 'white';
+  double strokeWidth = 1.0;
+
+  void setColor(String newColor) {
+    color = newColor;
+    print('Color set to $color');
+  }
+
+  void setStroke(double newWidth) {
+    strokeWidth = newWidth;
+    print('Stroke width set to $strokeWidth');
   }
 }
 
 void main() {
-  // Without cascade operator
-  Person person1 = Person();
-  person1.name = 'Alice';
-  person1.age = 25;
-  person1.city = 'New York';
-  person1.introduce();
-  
-  // With cascade operator
-  Person person2 = Person()
-    ..name = 'Bob'
-    ..age = 30
-    ..city = 'San Francisco'
-    ..introduce()
-    ..celebrateBirthday();
-  
-  // Cascade with lists
-  List<int> numbers = []
-    ..add(1)
-    ..add(2)
-    ..add(3)
-    ..sort()
-    ..forEach(print);
+  // Without cascade
+  var paint1 = Paint();
+  paint1.setColor('red');
+  paint1.setStroke(5.0);
+
+  // With cascade
+  var paint2 = Paint()
+    ..setColor('blue')
+    ..setStroke(10.0);
 }
 ```
 
-#### Conditional Operators
+---
 
-Conditional operators provide shorthand ways to handle conditional logic.
+### Operator Precedence
 
-```dart
-void main() {
-  // Ternary operator (condition ? true_value : false_value)
-  int score = 85;
-  String grade = score >= 90 ? 'A' : score >= 80 ? 'B' : 'C';
-  print('Score: $score, Grade: $grade');
-  
-  // Null-aware operator (??)
-  String? name = null;
-  String displayName = name ?? 'Anonymous';
-  print('Display name: $displayName');
-  
-  // Null-aware assignment (??=)
-  String? title;
-  title ??= 'Default Title'; // Assigns only if title is null
-  print('Title: $title');
-  
-  title ??= 'Another Title'; // Doesn't assign because title is not null
-  print('Title: $title');
-  
-  // Null-aware access (?.)
-  String? nullableString = null;
-  print('Length: ${nullableString?.length}'); // null, no error
-  
-  nullableString = 'Hello';
-  print('Length: ${nullableString?.length}'); // 5
-  
-  // Conditional access examples
-  demonstrateConditionalAccess();
-}
+When an expression contains multiple operators, Dart follows a set order of precedence to decide which to evaluate first (e.g., `*` before `+`).
 
-void demonstrateConditionalAccess() {
-  List<String>? names = ['Alice', 'Bob', 'Charlie'];
-  
-  // Safe access to list methods
-  print('First name: ${names?.first}');
-  print('Length: ${names?.length}');
-  
-  names = null;
-  print('First name when null: ${names?.first}');
-  print('Length when null: ${names?.length}');
-}
-```
+For example, `2 + 3 * 4` evaluates to `14`, not `20`, because multiplication has higher precedence. You can use parentheses `()` to change the order of evaluation.
 
-### **Module 3: Control Flow & Logic**
+`(2 + 3) * 4` evaluates to `20`.
 
-[⬅ Previous](topic-2-2-built-in-data-types.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-3-1-conditional-statements.md)
+For a complete list of operator precedence, refer to the [official Dart documentation](https://dart.dev/language/operators#operator-precedence).
+
+[⬅ Previous](topic-2-2-built-in-data-types.md) · [🏠 Roadmap](../The-Dart-Roadmap.md) · [Next ➡](topic-3-1-conditional-statements.md)

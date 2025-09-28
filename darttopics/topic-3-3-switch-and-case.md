@@ -1,275 +1,184 @@
 # Topic 3.3: Switch and Case
 
-[⬅ Previous](topic-3-2-loops.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-4-1-lists.md)
+[⬅ Previous](topic-3-2-loops.md) · [🏠 Roadmap](../The-Dart-Roadmap.md) · [Next ➡](topic-4-1-lists.md)
 
-  * [ ] Traditional `switch` statements for flow control
-  * [ ] Modern switch expressions
-  * [ ] Pattern matching in switch statements
+The **`switch` statement** provides a clean and powerful way to control program flow based on the value of a variable or expression. It is often a more readable alternative to a long chain of `if-else if` statements.
 
-#### Traditional Switch Statements
+Modern Dart has significantly enhanced `switch` with **pattern matching** and **switch expressions**, making it a versatile tool for handling complex data structures and ensuring all possibilities are handled.
 
-Switch statements provide a clean way to handle multiple conditions based on a single value.
+---
 
-**Basic switch statement:**
+### 1. Traditional `switch` Statement
+
+The classic `switch` statement compares a value against several `case` clauses. When a match is found, the code inside that `case` is executed until a `break` statement is encountered.
+
+**Syntax:**
+```dart
+switch (variable) {
+  case value1:
+    // Code for value1
+    break;
+  case value2:
+    // Code for value2
+    break;
+  default:
+    // Code if no case matches
+}
+```
+
+**Example:**
+Let's identify the day of the week.
+
 ```dart
 void main() {
   int dayOfWeek = 3;
   
   switch (dayOfWeek) {
     case 1:
-      print('Monday - Start of the work week');
+      print('Monday');
       break;
     case 2:
-      print('Tuesday - Getting into the groove');
+      print('Tuesday');
       break;
     case 3:
-      print('Wednesday - Hump day!');
+      print('Wednesday');
       break;
-    case 4:
-      print('Thursday - Almost there');
-      break;
-    case 5:
-      print('Friday - TGIF!');
-      break;
-    case 6:
-      print('Saturday - Weekend time');
-      break;
-    case 7:
-      print('Sunday - Rest day');
-      break;
+    // ... other days
     default:
-      print('Invalid day number');
+      print('Invalid day');
   }
 }
 ```
 
-**Switch with strings:**
+You can also group cases that should execute the same code block.
+
 ```dart
 void main() {
-  String grade = 'B';
+  String fruit = 'apple';
   
-  switch (grade.toUpperCase()) {
-    case 'A':
-      print('Excellent! Keep up the great work!');
+  switch (fruit) {
+    case 'apple':
+    case 'banana':
+      print('It is a fruit.');
       break;
-    case 'B':
-      print('Good job! You\'re doing well.');
+    case 'potato':
+      print('It is a vegetable.');
       break;
-    case 'C':
-      print('Average. There\'s room for improvement.');
-      break;
-    case 'D':
-      print('Below average. Please study harder.');
-      break;
-    case 'F':
-      print('Failed. You need to retake the exam.');
-      break;
-    default:
-      print('Invalid grade entered.');
   }
 }
 ```
 
-**Multiple cases with same action:**
+---
+
+### 2. `switch` as an Expression
+
+In modern Dart, `switch` can be used as an expression that returns a value. This form is more concise and often safer because the compiler can check that you've handled all possible cases (a property called **exhaustiveness**).
+
+**Syntax:**
 ```dart
-void main() {
-  String month = 'December';
-  
-  switch (month.toLowerCase()) {
-    case 'december':
-    case 'january':
-    case 'february':
-      print('$month is a winter month');
-      break;
-    case 'march':
-    case 'april':
-    case 'may':
-      print('$month is a spring month');
-      break;
-    case 'june':
-    case 'july':
-    case 'august':
-      print('$month is a summer month');
-      break;
-    case 'september':
-    case 'october':
-    case 'november':
-      print('$month is a fall/autumn month');
-      break;
-    default:
-      print('Invalid month name');
-  }
-}
-```
-
-**Switch in functions:**
-```dart
-String getOperationResult(String operation, double a, double b) {
-  switch (operation) {
-    case '+':
-      return '${a + b}';
-    case '-':
-      return '${a - b}';
-    case '*':
-      return '${a * b}';
-    case '/':
-      if (b != 0) {
-        return '${a / b}';
-      } else {
-        return 'Error: Division by zero';
-      }
-    default:
-      return 'Error: Unknown operation';
-  }
-}
-
-void main() {
-  print('Calculator:');
-  print('5 + 3 = ${getOperationResult('+', 5, 3)}');
-  print('10 - 4 = ${getOperationResult('-', 10, 4)}');
-  print('6 * 7 = ${getOperationResult('*', 6, 7)}');
-  print('15 / 3 = ${getOperationResult('/', 15, 3)}');
-  print('10 / 0 = ${getOperationResult('/', 10, 0)}');
-  print('5 % 2 = ${getOperationResult('%', 5, 2)}');
-}
-```
-
-**Advanced switch usage:**
-```dart
-enum Priority { low, medium, high, urgent }
-
-void main() {
-  Priority taskPriority = Priority.high;
-  
-  switch (taskPriority) {
-    case Priority.low:
-      print('📝 Low priority - Handle when convenient');
-      break;
-    case Priority.medium:
-      print('📋 Medium priority - Handle within a day');
-      break;
-    case Priority.high:
-      print('⚡ High priority - Handle within hours');
-      break;
-    case Priority.urgent:
-      print('🚨 Urgent - Handle immediately!');
-      break;
-  }
-  
-  // Switch with complex conditions
-  processHttpStatusCode(200);
-  processHttpStatusCode(404);
-  processHttpStatusCode(500);
-}
-
-void processHttpStatusCode(int statusCode) {
-  switch (statusCode) {
-    case 200:
-    case 201:
-    case 202:
-      print('✅ Success: Request completed successfully');
-      break;
-    case 400:
-    case 401:
-    case 403:
-    case 404:
-      print('❌ Client Error: Status code $statusCode');
-      break;
-    case 500:
-    case 502:
-    case 503:
-      print('🔥 Server Error: Status code $statusCode');
-      break;
-    default:
-      if (statusCode >= 100 && statusCode < 200) {
-        print('ℹ️ Informational: Status code $statusCode');
-      } else if (statusCode >= 300 && statusCode < 400) {
-        print('↩️ Redirection: Status code $statusCode');
-      } else {
-        print('❓ Unknown status code: $statusCode');
-      }
-  }
-}
-```
-
-#### Modern Switch Expressions
-
-Switch expressions let you transform values without verbose `break` statements. They return a value directly, making them great for lookups or mapping states.
-
-```dart
-String describeScore(int score) => switch (score) {
-  100 => 'Perfect! 🏆',
-  >= 90 && < 100 => 'Excellent',
-  >= 80 && < 90 => 'Great job',
-  >= 70 && < 80 => 'Solid effort',
-  >= 60 && < 70 => 'Needs more practice',
-  _ => 'Retake recommended',
+var result = switch (variable) {
+  pattern1 => value1,
+  pattern2 => value2,
+  _ => defaultValue // The underscore `_` is a wildcard pattern.
 };
+```
+
+**Example:**
+Let's get a description for a status enum.
+
+```dart
+enum Status { pending, running, completed, failed }
 
 void main() {
-  for (final score in [100, 92, 76, 51]) {
-    print('$score → ${describeScore(score)}');
-  }
+  var currentStatus = Status.completed;
 
-  // Switch expressions can include guard clauses (`when`) for extra control.
-  final role = 'manager';
-  final accessLevel = switch (role) {
-    'admin' => 'full access',
-    'manager' when DateTime.now().weekday <= DateTime.friday => 'business hours access',
-    'manager' => 'limited access',
-    'guest' || 'viewer' => 'read-only access',
-    _ => 'no access',
+  // The switch expression evaluates to a String.
+  var message = switch (currentStatus) {
+    Status.pending => 'The process is waiting to start.',
+    Status.running => 'The process is currently running.',
+    Status.completed => 'The process finished successfully.',
+    Status.failed => 'The process encountered an error.'
+    // No default case is needed because all enum values are handled.
   };
 
-  print('Role: $role → $accessLevel');
+  print(message);
 }
 ```
 
-#### Pattern Matching in Switch Statements
+---
 
-Modern Dart switch statements can destructure records, lists, and even sealed class hierarchies. This makes it easier to work with complex data while keeping the code expressive.
+### 3. Pattern Matching in `switch`
+
+Pattern matching supercharges `switch` by allowing you to check not just for equality but also for the **shape** and **properties** of your data.
+
+**a. Matching on Type**
+
+You can execute different code based on an object's type.
 
 ```dart
-// Record pattern
-String formatPoint((int x, int y) point) => switch (point) {
-  (0, 0) => 'Origin',
-  (final x, 0) => 'On X-axis at $x',
-  (0, final y) => 'On Y-axis at $y',
-  (final x, final y) when x == y => 'On the diagonal at ($x, $y)',
-  (final x, final y) => 'Point at ($x, $y)',
-};
+void main() {
+  Object value = 123; // The type is Object, but the value is an int.
 
-// List and object pattern
-void describeCommand(dynamic command) {
-  switch (command) {
-    ['login', String username] => print('Logging in $username'),
-    ['logout'] => print('Logging out'),
-    User(isPremium: true, name: final name) => print('Premium user $name'),
-    User(name: final name, score: >= 1000) => print('High-score user $name'),
-    _ => print('Unknown command: $command'),
-  }
+  var result = switch (value) {
+    int() => 'It is an integer.',
+    String() => 'It is a String.',
+    bool() => 'It is a boolean.',
+    _ => 'It is some other type.'
+  };
+  
+  print(result); // Output: It is an integer.
 }
+```
 
-class User {
-  final String name;
-  final bool isPremium;
-  final int score;
+**b. Matching with Guard Clauses (`when`)**
 
-  const User(this.name, {this.isPremium = false, this.score = 0});
+You can add an extra `if` condition to a `case` using the `when` keyword.
+
+```dart
+void main() {
+  Object value = 100;
+
+  var result = switch (value) {
+    int() when value > 50 => 'An integer greater than 50.',
+    int() => 'An integer 50 or less.',
+    _ => 'Not an integer.'
+  };
+  
+  print(result); // Output: An integer greater than 50.
+}
+```
+
+**c. Destructuring and Matching on Object Properties**
+
+You can "destructure" an object to match against its internal fields. This is incredibly powerful for working with custom classes.
+
+```dart
+// A simple class representing a point on a grid.
+class Point {
+  final int x, y;
+  Point(this.x, this.y);
 }
 
 void main() {
-  print(formatPoint((0, 0)));
-  print(formatPoint((2, 0)));
-  print(formatPoint((3, 3)));
+  var point = Point(2, 0);
 
-  describeCommand(['login', 'alice']);
-  describeCommand(const User('bob', isPremium: true));
-  describeCommand(const User('eve', score: 1200));
-  describeCommand(['shutdown']);
+  var description = switch (point) {
+    // Match a Point at the origin.
+    Point(x: 0, y: 0) => 'The point is at the origin.',
+    // Match any Point on the x-axis.
+    Point(x: var x, y: 0) => 'On the x-axis at x = $x.',
+    // Match any Point on the y-axis.
+    Point(x: 0, y: var y) => 'On the y-axis at y = $y.',
+    // Match any other Point.
+    Point(x: var x, y: var y) => 'At coordinates ($x, $y).',
+    // The default case is required if not all possibilities are covered.
+    _ => 'Not a point.'
+  };
+  
+  print(description); // Output: On the x-axis at x = 2.
 }
 ```
 
-### **Module 4: Collections (Grouping Data)**
+Pattern matching makes your code more declarative and expressive, allowing you to describe *what* you're looking for rather than writing a series of imperative checks.
 
-[⬅ Previous](topic-3-2-loops.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-4-1-lists.md)
+[⬅ Previous](topic-3-2-loops.md) · [🏠 Roadmap](../The-Dart-Roadmap.md) · [Next ➡](topic-4-1-lists.md)

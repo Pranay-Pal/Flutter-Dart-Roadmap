@@ -1,239 +1,208 @@
 # Topic 4.3: Maps
 
-[⬅ Previous](topic-4-2-sets.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-4-4-collection-tools.md)
+[⬅ Previous](topic-4-2-sets.md) · [🏠 Roadmap](../The-Dart-Roadmap.md) · [Next ➡](topic-4-4-collection-tools.md)
 
-    * [ ] Using key-value pairs to store data
+A **`Map`** is a dynamic collection that represents a set of values as **key-value pairs**. Each key in a map must be unique, and it is used to retrieve the corresponding value. Maps are also known as dictionaries or associative arrays in other programming languages.
 
-#### Using Key-Value Pairs with Maps
+Maps are incredibly useful for storing and retrieving data when you can associate it with a unique identifier. For example, you could map a user ID to a user profile, a product SKU to its details, or a configuration setting to its value.
 
-Maps store data as key-value pairs, where each key is unique and maps to a specific value.
+---
 
-**Creating maps:**
+### 1. Creating Maps
+
+You can create a `Map` using a map literal `{}` or a constructor.
+
+**a. Map Literals** This is the most common and concise way to create a map.
+
 ```dart
 void main() {
-  // Creating maps with different approaches
-  Map<String, int> ages = {
-    'Alice': 25,
-    'Bob': 30,
-    'Charlie': 22
+  // A map of string keys to integer values.
+  var ages = {
+    'Alice': 30,
+    'Bob': 25,
+    'Charlie': 35,
   };
-  
-  Map<String, double> prices = {
-    'coffee': 4.50,
-    'tea': 3.25,
-    'sandwich': 8.99
+
+  // A map of string keys to string values.
+  Map<String, String> capitals = {
+    'USA': 'Washington, D.C.',
+    'Japan': 'Tokyo',
   };
-  
-  // Creating empty maps
-  Map<String, String> emptyMap = {};
-  Map<String, String> emptyMap2 = <String, String>{};
-  Map<String, String> emptyMap3 = Map<String, String>();
-  
-  // Creating map from iterables
-  List<String> keys = ['a', 'b', 'c'];
-  List<int> values = [1, 2, 3];
-  Map<String, int> mapFromLists = Map.fromIterables(keys, values);
-  
-  print('Ages: $ages');
-  print('Prices: $prices');
-  print('Map from lists: $mapFromLists');
+
+  // An empty map.
+  var emptyMap = <String, int>{};
+
+  print(ages);
+  print(capitals);
+  print('Is the map empty? ${emptyMap.isEmpty}');
 }
 ```
 
-**Accessing and modifying map values:**
+**b. Using the `Map` Constructor** You can also create an empty map using the `Map()` constructor.
+
 ```dart
 void main() {
-  Map<String, String> countries = {
-    'US': 'United States',
-    'UK': 'United Kingdom',
-    'CA': 'Canada',
-    'AU': 'Australia'
-  };
-  
-  print('Initial countries: $countries');
-  
-  // Accessing values
-  print('US: ${countries['US']}');
-  print('Non-existent key: ${countries['XX']}'); // Returns null
-  
-  // Safe access with default value
-  String country = countries['XX'] ?? 'Unknown Country';
-  print('Country with default: $country');
-  
-  // Adding new key-value pairs
-  countries['IN'] = 'India';
-  countries['JP'] = 'Japan';
-  print('After adding: $countries');
-  
-  // Updating existing values
-  countries['US'] = 'United States of America';
-  print('After updating: $countries');
-  
-  // Adding multiple entries
-  countries.addAll({
-    'FR': 'France',
-    'DE': 'Germany'
-  });
-  print('After adding multiple: $countries');
-  
-  // Removing entries
-  String? removed = countries.remove('AU');
-  print('Removed value: $removed');
-  print('After removal: $countries');
+  var scores = Map<String, int>();
+  scores['math'] = 95;
+  scores['english'] = 88;
+  print(scores); // {math: 95, english: 88}
 }
 ```
 
-**Map operations and methods:**
+---
+
+### 2. Accessing and Modifying Values
+
+You can access, add, and update values using the subscript operator `[]`.
+
+**a. Accessing Values** Use the key to look up the corresponding value. If the key doesn't exist, it returns `null`.
+
 ```dart
 void main() {
-  Map<String, int> inventory = {
-    'apples': 50,
-    'bananas': 30,
-    'oranges': 25,
-    'grapes': 15
+  var user = {
+    'name': 'John Doe',
+    'email': 'john.doe@example.com',
   };
-  
-  print('Inventory: $inventory');
-  
-  // Map properties
-  print('Number of items: ${inventory.length}');
-  print('Is empty: ${inventory.isEmpty}');
-  print('Keys: ${inventory.keys}');
-  print('Values: ${inventory.values}');
-  
-  // Checking for keys and values
-  print('Contains apples: ${inventory.containsKey('apples')}');
-  print('Contains quantity 30: ${inventory.containsValue(30)}');
-  
-  // Iterating over map
-  print('\nInventory details:');
-  inventory.forEach((fruit, quantity) {
-    print('$fruit: $quantity');
+
+  print(user['name']); // Output: John Doe
+  print(user['age']); // Output: null (because the key 'age' does not exist)
+}
+```
+
+**b. Adding and Updating Values** If the key already exists, its value is updated. If it doesn't exist, a new key-value pair is added.
+
+```dart
+void main() {
+  var config = {
+    'theme': 'dark',
+  };
+
+  // Update an existing value
+  config['theme'] = 'light';
+  print(config); // {theme: light}
+
+  // Add a new key-value pair
+  config['fontSize'] = 16;
+  print(config); // {theme: light, fontSize: 16}
+}
+```
+
+---
+
+### 3. Removing Entries
+
+You can remove key-value pairs using the `remove()` method, which returns the value of the removed key.
+
+```dart
+void main() {
+  var inventory = {
+    'apples': 10,
+    'bananas': 20,
+    'oranges': 15,
+  };
+
+  // Remove the 'bananas' entry and get its value.
+  int? removedValue = inventory.remove('bananas');
+
+  print('Removed $removedValue bananas.'); // Removed 20 bananas.
+  print(inventory); // {apples: 10, oranges: 15}
+}
+```
+
+---
+
+### 4. Common Properties and Methods
+
+Maps have several useful properties and methods for checking their state.
+
+- **`keys`**: Returns an iterable of all the keys.
+- **`values`**: Returns an iterable of all the values.
+- **`length`**: Returns the number of key-value pairs.
+- **`isEmpty` / `isNotEmpty`**: Checks if the map is empty.
+- **`containsKey()`**: Checks if a key exists.
+- **`containsValue()`**: Checks if a value exists.
+
+```dart
+void main() {
+  var product = {
+    'name': 'Laptop',
+    'price': 999.99,
+    'inStock': true,
+  };
+
+  print('Keys: ${product.keys}'); // (name, price, inStock)
+  print('Values: ${product.values}'); // (Laptop, 999.99, true)
+  print('Length: ${product.length}'); // 3
+
+  print('Does it have a price? ${product.containsKey('price')}'); // true
+  print('Is anything free? ${product.containsValue(0)}'); // false
+}
+```
+
+---
+
+### 5. Iterating Over a Map
+
+You can iterate over a map's keys, values, or entries.
+
+**a. Iterating Over Entries** The `forEach` method or a `for-in` loop on `entries` gives you access to both the key and value.
+
+```dart
+void main() {
+  var scores = {'Math': 90, 'Science': 85, 'History': 92};
+
+  // Using forEach
+  scores.forEach((subject, score) {
+    print('$subject score: $score');
   });
-  
-  // Iterating with entries
-  print('\nUsing entries:');
-  for (MapEntry<String, int> entry in inventory.entries) {
+
+  // Using a for-in loop with entries
+  for (var entry in scores.entries) {
     print('${entry.key}: ${entry.value}');
   }
-  
-  // Convert to lists
-  List<String> fruits = inventory.keys.toList();
-  List<int> quantities = inventory.values.toList();
-  print('Fruits list: $fruits');
-  print('Quantities list: $quantities');
 }
 ```
 
-**Advanced map operations:**
+**b. Iterating Over Keys or Values**
+
 ```dart
 void main() {
-  Map<String, double> grades = {
-    'Alice': 92.5,
-    'Bob': 87.0,
-    'Charlie': 95.5,
-    'Diana': 89.5,
-    'Eve': 78.5
-  };
-  
-  // Filtering maps
-  Map<String, double> highGrades = Map.fromEntries(
-    grades.entries.where((entry) => entry.value >= 90)
-  );
-  print('High grades (>=90): $highGrades');
-  
-  // Transforming values
-  Map<String, String> letterGrades = grades.map(
-    (name, grade) => MapEntry(name, getLetterGrade(grade))
-  );
-  print('Letter grades: $letterGrades');
-  
-  // Finding maximum and minimum
-  double highestGrade = grades.values.reduce((a, b) => a > b ? a : b);
-  double lowestGrade = grades.values.reduce((a, b) => a < b ? a : b);
-  
-  String topStudent = grades.entries
-      .where((entry) => entry.value == highestGrade)
-      .first
-      .key;
-  
-  print('Highest grade: $highestGrade (by $topStudent)');
-  print('Lowest grade: $lowestGrade');
-  
-  // Group by condition
-  Map<String, List<String>> groupedStudents = {
-    'excellent': [],
-    'good': [],
-    'average': []
-  };
-  
-  grades.forEach((name, grade) {
-    if (grade >= 90) {
-      groupedStudents['excellent']!.add(name);
-    } else if (grade >= 80) {
-      groupedStudents['good']!.add(name);
-    } else {
-      groupedStudents['average']!.add(name);
-    }
-  });
-  
-  print('Grouped students: $groupedStudents');
-}
+  var scores = {'Math': 90, 'Science': 85};
 
-String getLetterGrade(double grade) {
-  if (grade >= 90) return 'A';
-  if (grade >= 80) return 'B';
-  if (grade >= 70) return 'C';
-  if (grade >= 60) return 'D';
-  return 'F';
+  // Loop over keys
+  for (var key in scores.keys) {
+    print('Subject: $key');
+  }
+
+  // Loop over values
+  for (var value in scores.values) {
+    print('Score: $value');
+  }
 }
 ```
 
-**Nested maps and complex data structures:**
+---
+
+### 6. Spread Operator and Collection `if`/`for`
+
+Just like with lists, you can use these modern features to build maps declaratively.
+
 ```dart
 void main() {
-  // Student database with nested information
-  Map<String, Map<String, dynamic>> students = {
-    'student1': {
-      'name': 'Alice Johnson',
-      'age': 20,
-      'grades': [92, 88, 95, 87],
-      'address': {
-        'street': '123 Main St',
-        'city': 'Boston',
-        'zipCode': '02101'
-      }
-    },
-    'student2': {
-      'name': 'Bob Smith',
-      'age': 19,
-      'grades': [78, 82, 85, 80],
-      'address': {
-        'street': '456 Oak Ave',
-        'city': 'New York',
-        'zipCode': '10001'
-      }
-    }
+  var baseProfile = {
+    'name': 'User',
+    'email': 'user@example.com',
   };
-  
-  // Accessing nested data
-  String studentName = students['student1']!['name'];
-  List<int> grades = students['student1']!['grades'];
-  String city = students['student1']!['address']['city'];
-  
-  print('Student: $studentName');
-  print('Grades: $grades');
-  print('City: $city');
-  
-  // Calculate average grade for each student
-  students.forEach((id, studentData) {
-    List<int> studentGrades = studentData['grades'];
-    double average = studentGrades.reduce((a, b) => a + b) / studentGrades.length;
-    print('${studentData['name']} average: ${average.toStringAsFixed(1)}');
-  });
+  bool includeAdmin = true;
+
+  var fullProfile = {
+    ...baseProfile, // Spread the base profile
+    'id': '12345',
+    if (includeAdmin) 'isAdmin': true, // Collection if
+  };
+
+  print(fullProfile); // {name: User, email: user@example.com, id: 12345, isAdmin: true}
 }
 ```
 
-### **Module 4: Collections (Grouping Data)**
-
-[⬅ Previous](topic-4-2-sets.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-4-4-collection-tools.md)
+[⬅ Previous](topic-4-2-sets.md) · [🏠 Roadmap](../The-Dart-Roadmap.md) · [Next ➡](topic-4-4-collection-tools.md)
