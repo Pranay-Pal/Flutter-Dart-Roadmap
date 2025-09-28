@@ -1,5 +1,7 @@
 # Topic 1.1: Setup & Tooling
 
+[⬅ Previous](topic-13-3-where-to-go-next.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-1-2-your-first-program.md)
+
     * [ ] Installing the Dart SDK
     * [ ] Configuring a code editor (e.g., VS Code with Dart extension)
 
@@ -57,3 +59,5 @@ You should see output like: `Dart SDK version: 3.2.0 (stable)`
 - **IntelliJ IDEA/Android Studio**: Install the Dart plugin
 - **Vim/Neovim**: Use the coc-dart plugin
 - **Emacs**: Use dart-mode
+
+[⬅ Previous](topic-13-3-where-to-go-next.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-1-2-your-first-program.md)

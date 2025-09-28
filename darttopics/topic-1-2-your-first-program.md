@@ -1,5 +1,7 @@
 # Topic 1.2: Your First Program
 
+[⬅ Previous](topic-1-1-setup-tooling.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-2-1-variables-data.md)
+
     * [ ] The `main()` function: Dart's entry point
     * [ ] Writing to the console with `print()`
     * [ ] Understanding code comments (`//`, `/*...*/`, `///`)
@@ -132,5 +134,7 @@ Years of experience: 2
 Future experience: 3 years
 Program completed successfully!
 ```
+
+[⬅ Previous](topic-1-1-setup-tooling.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-2-1-variables-data.md)
 
 ### **Module 2: Language Fundamentals**

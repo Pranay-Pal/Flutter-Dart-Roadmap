@@ -1,5 +1,7 @@
 # Topic 11.1: Libraries and Packages
 
+[⬅ Previous](topic-10-2-error-handling.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-11-2-core-libraries.md)
+
     * [ ] Organizing code with `library`, `import`, and `export`
     * [ ] Using the `pub` package manager and `pubspec.yaml`
 
@@ -36,17 +38,25 @@ class Calculator {
   static double multiply(double a, double b) => a * b;
 }
 
-// main.dart
-import 'package:http/http.dart' as http;
-import 'lib/utils/math_utils.dart';
+// lib/utils/src/geometry.dart
+double circleArea(double radius) => Calculator.multiply(radius, radius) * 3.14159;
 
-void main() async {
+// bin/main.dart
+import 'package:http/http.dart' as http;
+import 'package:my_dart_project/utils/math_utils.dart';
+
+Future<void> main() async {
   // Using imported package
-  var response = await http.get(Uri.parse('https://api.example.com/data'));
+  final response = await http.get(Uri.parse('https://api.example.com/data'));
   print('Response status: ${response.statusCode}');
-  
-  // Using local library
-  double result = Calculator.add(5.0, 3.0);
+
+  // Using local library exports
+  final result = Calculator.add(5.0, 3.0);
   print('5 + 3 = $result');
+  print('Circle area (r=2): ${circleArea(2).toStringAsFixed(2)}');
 }
 ```
+
+### **Module 11: The Dart Ecosystem**
+
+[⬅ Previous](topic-10-2-error-handling.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-11-2-core-libraries.md)

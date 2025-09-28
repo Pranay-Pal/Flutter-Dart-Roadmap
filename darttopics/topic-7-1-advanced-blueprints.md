@@ -1,5 +1,7 @@
 # Topic 7.1: Advanced Blueprints
 
+[⬅ Previous](topic-6-3-inheritance.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-7-2-modern-oop-features.md)
+
     * [ ] Abstract classes and methods
     * [ ] Implicit interfaces with `implements`
     * [ ] Reusing code with `mixins`
@@ -162,3 +164,7 @@ void main() {
   // penguin.fly(); // Error: Penguin doesn't have fly()
 }
 ```
+
+### **Module 7: Object-Oriented Programming (OOP) - Part 2**
+
+[⬅ Previous](topic-6-3-inheritance.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-7-2-modern-oop-features.md)

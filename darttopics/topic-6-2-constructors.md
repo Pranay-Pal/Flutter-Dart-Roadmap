@@ -1,5 +1,7 @@
 # Topic 6.2: Constructors
 
+[⬅ Previous](topic-6-1-classes-and-objects.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-6-3-inheritance.md)
+
     * [ ] Default, named, constant, and factory constructors
 
 #### Constructors in Dart
@@ -51,6 +53,8 @@ void main() {
 
 **Named constructors:**
 ```dart
+import 'dart:math';
+
 class Point {
   double x;
   double y;
@@ -87,9 +91,6 @@ class Point {
     print('Point($x, $y)');
   }
 }
-
-// Import for sqrt function
-import 'dart:math';
 
 void main() {
   // Using different constructors
@@ -253,3 +254,7 @@ void main() {
   }
 }
 ```
+
+### **Module 6: Object-Oriented Programming (OOP) - Part 1**
+
+[⬅ Previous](topic-6-1-classes-and-objects.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-6-3-inheritance.md)

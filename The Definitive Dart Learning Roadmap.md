@@ -12,7 +12,7 @@ Each topic is now available as a separate, detailed markdown file for focused le
     * [ ] Installing the Dart SDK
     * [ ] Configuring a code editor (e.g., VS Code with Dart extension)
 
-* **[Topic 1.2: Your First Program](topics/topic-1-2-your-first-program.md)**
+* **[Topic 1.2: Your First Program](darttopics/topic-1-2-your-first-program.md)**
     * [ ] The `main()` function: Dart's entry point
     * [ ] Writing to the console with `print()`
     * [ ] Understanding code comments (`//`, `/*...*/`, `///`)
@@ -25,7 +25,7 @@ Each topic is now available as a separate, detailed markdown file for focused le
     * [ ] Declaring variables: `var`, `final`, `const`
     * [ ] Understanding lazy initialization with `late`
 
-* **[Topic 2.2: Built-in Data Types](topics/topic-2-2-built-in-data-types.md)**
+* **[Topic 2.2: Built-in Data Types](darttopics/topic-2-2-built-in-data-types.md)**
     * [ ] Numbers (`int`, `double`, `num`)
     * [ ] Strings (`String`) and interpolation
     * [ ] Booleans (`bool`)
@@ -171,43 +171,32 @@ Each topic is now available as a separate, detailed markdown file for focused le
 ## **Module 12: Tooling & Platform Integration**
 
 * **[Topic 12.1: The Professional Toolchain](darttopics/topic-12-1-the-professional-toolchain.md)**
-    * [ ] Code analysis, formatting, and testing
+    * [ ] Command-line tooling (`run`, `analyze`, `format`, `compile`)
+    * [ ] Testing with `dart test`
+    * [ ] Debugging and profiling with Dart DevTools
 
 * **[Topic 12.2: Platform Interoperability](darttopics/topic-12-2-platform-interoperability.md)**
-    * [ ] FFI (Foreign Function Interface)
+    * [ ] Calling native code with FFI
+    * [ ] Communicating with Kotlin/Java and Swift/Objective-C via `MethodChannel`
 
 ---
 
 ## **Module 13: Best Practices & Next Steps**
 
 * **[Topic 13.1: Writing Quality Code](darttopics/topic-13-1-writing-quality-code.md)**
-    * [ ] Following the "Effective Dart" style and usage guides
+    * [ ] Applying "Effective Dart" style and documentation guidance
+    * [ ] Enforcing best practices with `analysis_options.yaml`
 
 * **[Topic 13.2: Compilation and Deployment](darttopics/topic-13-2-compilation-and-deployment.md)**
-    * [ ] Understanding Dart's compilation targets
+    * [ ] Understanding Dart's JIT vs. AOT compilation targets
+    * [ ] Packaging Dart apps for deployment (e.g., Docker)
 
 * **[Topic 13.3: Where to Go Next](darttopics/topic-13-3-where-to-go-next.md)**
     * [ ] Applying Dart skills to build applications with **Flutter**
+    * [ ] Planning advanced learning paths and contributions
 
 ---
 
-## **Congratulations! 🎉**
-
-You've completed the comprehensive Dart learning roadmap! You now have a solid foundation in:
-
-- **Dart Syntax & Semantics**: Variables, functions, classes, and control flow
-- **Object-Oriented Programming**: Inheritance, polymorphism, and modern OOP features
-- **Asynchronous Programming**: Futures, async/await, and streams
-- **Modern Language Features**: Null safety, records, pattern matching
-- **Professional Development**: Testing, tooling, and best practices
-
-### **What's Next?**
-
-1. **Build Projects**: Create CLI tools, web servers, or scripts using Dart
-2. **Learn Flutter**: Apply your Dart skills to mobile app development
-3. **Explore Advanced topics**: Study design patterns, state management, and architecture
-4. **Join the Community**: Participate in Dart and Flutter communities
-5. **Keep Learning**: Stay updated with new Dart features and best practices
 
 ### **Resources for Continued Learning:**
 

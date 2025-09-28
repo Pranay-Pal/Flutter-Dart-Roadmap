@@ -1,5 +1,7 @@
 # Topic 5.1: Function Basics
 
+[⬅ Previous](topic-4-4-collection-tools.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-5-2-parameter-types.md)
+
     * [ ] Defining functions with parameters and return values
 
 #### Defining Functions with Parameters and Return Values
@@ -144,3 +146,7 @@ void main() {
   }
 }
 ```
+
+### **Module 5: Functions (Reusable Code)**
+
+[⬅ Previous](topic-4-4-collection-tools.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-5-2-parameter-types.md)

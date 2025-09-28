@@ -1,5 +1,7 @@
 # Topic 3.2: Loops
 
+[⬅ Previous](topic-3-1-conditional-statements.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-3-3-switch-and-case.md)
+
     * [ ] `for` (including `for-in`), `while`, and `do-while` loops
     * [ ] Using `break` and `continue`
 
@@ -245,3 +247,7 @@ void main() {
   }
 }
 ```
+
+### **Module 3: Control Flow & Logic**
+
+[⬅ Previous](topic-3-1-conditional-statements.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-3-3-switch-and-case.md)

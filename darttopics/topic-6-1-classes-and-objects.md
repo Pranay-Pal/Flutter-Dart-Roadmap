@@ -1,5 +1,7 @@
 # Topic 6.1: Classes and Objects
 
+[⬅ Previous](topic-5-3-advanced-function-concepts.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-6-2-constructors.md)
+
     * [ ] Creating classes, properties (fields), and methods
 
 #### Creating Classes, Properties (Fields), and Methods
@@ -194,3 +196,7 @@ void main() {
   student3.displayInfo();
 }
 ```
+
+### **Module 6: Object-Oriented Programming (OOP) - Part 1**
+
+[⬅ Previous](topic-5-3-advanced-function-concepts.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-6-2-constructors.md)

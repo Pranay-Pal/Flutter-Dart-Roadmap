@@ -1,6 +1,10 @@
 # Topic 3.3: Switch and Case
 
-    * [ ] Traditional `switch` statements for flow control
+[⬅ Previous](topic-3-2-loops.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-4-1-lists.md)
+
+  * [ ] Traditional `switch` statements for flow control
+  * [ ] Modern switch expressions
+  * [ ] Pattern matching in switch statements
 
 #### Traditional Switch Statements
 
@@ -188,4 +192,84 @@ void processHttpStatusCode(int statusCode) {
 }
 ```
 
+#### Modern Switch Expressions
+
+Switch expressions let you transform values without verbose `break` statements. They return a value directly, making them great for lookups or mapping states.
+
+```dart
+String describeScore(int score) => switch (score) {
+  100 => 'Perfect! 🏆',
+  >= 90 && < 100 => 'Excellent',
+  >= 80 && < 90 => 'Great job',
+  >= 70 && < 80 => 'Solid effort',
+  >= 60 && < 70 => 'Needs more practice',
+  _ => 'Retake recommended',
+};
+
+void main() {
+  for (final score in [100, 92, 76, 51]) {
+    print('$score → ${describeScore(score)}');
+  }
+
+  // Switch expressions can include guard clauses (`when`) for extra control.
+  final role = 'manager';
+  final accessLevel = switch (role) {
+    'admin' => 'full access',
+    'manager' when DateTime.now().weekday <= DateTime.friday => 'business hours access',
+    'manager' => 'limited access',
+    'guest' || 'viewer' => 'read-only access',
+    _ => 'no access',
+  };
+
+  print('Role: $role → $accessLevel');
+}
+```
+
+#### Pattern Matching in Switch Statements
+
+Modern Dart switch statements can destructure records, lists, and even sealed class hierarchies. This makes it easier to work with complex data while keeping the code expressive.
+
+```dart
+// Record pattern
+String formatPoint((int x, int y) point) => switch (point) {
+  (0, 0) => 'Origin',
+  (final x, 0) => 'On X-axis at $x',
+  (0, final y) => 'On Y-axis at $y',
+  (final x, final y) when x == y => 'On the diagonal at ($x, $y)',
+  (final x, final y) => 'Point at ($x, $y)',
+};
+
+// List and object pattern
+void describeCommand(dynamic command) {
+  switch (command) {
+    ['login', String username] => print('Logging in $username'),
+    ['logout'] => print('Logging out'),
+    User(isPremium: true, name: final name) => print('Premium user $name'),
+    User(name: final name, score: >= 1000) => print('High-score user $name'),
+    _ => print('Unknown command: $command'),
+  }
+}
+
+class User {
+  final String name;
+  final bool isPremium;
+  final int score;
+
+  const User(this.name, {this.isPremium = false, this.score = 0});
+}
+
+void main() {
+  print(formatPoint((0, 0)));
+  print(formatPoint((2, 0)));
+  print(formatPoint((3, 3)));
+
+  describeCommand(['login', 'alice']);
+  describeCommand(const User('bob', isPremium: true));
+  describeCommand(const User('eve', score: 1200));
+  describeCommand(['shutdown']);
+}
+```
+
 ### **Module 4: Collections (Grouping Data)**
+
+[⬅ Previous](topic-3-2-loops.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-4-1-lists.md)

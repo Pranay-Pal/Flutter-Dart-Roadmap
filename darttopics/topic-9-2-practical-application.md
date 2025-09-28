@@ -1,5 +1,7 @@
 # Topic 9.2: Practical Application
 
+[⬅ Previous](topic-9-1-understanding-the-system.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-10-1-records-patterns.md)
+
     * [ ] Type promotion and flow analysis
     * [ ] Using the assertion (`!`) and `late` keywords safely
 
@@ -49,3 +51,5 @@ void main() {
 ```
 
 ### **Module 10: Modern Dart Features**
+
+[⬅ Previous](topic-9-1-understanding-the-system.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-10-1-records-patterns.md)

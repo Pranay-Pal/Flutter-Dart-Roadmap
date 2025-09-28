@@ -1,5 +1,7 @@
 # Topic 5.3: Advanced Function Concepts
 
+[⬅ Previous](topic-5-2-parameter-types.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-6-1-classes-and-objects.md)
+
     * [ ] Arrow syntax (`=>`), anonymous functions, and lexical scope
     * [ ] Using `typedef` for function aliases
 
@@ -431,3 +433,5 @@ void executePlugins(
 ```
 
 ### **Module 6: Object-Oriented Programming (OOP) - Part 1**
+
+[⬅ Previous](topic-5-2-parameter-types.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-6-1-classes-and-objects.md)

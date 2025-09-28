@@ -1,5 +1,7 @@
 # Topic 2.1: Variables & Data
 
+[⬅ Previous](topic-1-2-your-first-program.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-2-2-built-in-data-types.md)
+
     * [ ] Declaring variables: `var`, `final`, `const`
     * [ ] Understanding lazy initialization with `late`
 
@@ -116,22 +118,26 @@ String performExpensiveComputation() {
 
 **Lazy initialization pattern:**
 ```dart
-class DatabaseConnection {
-  late final String connectionString;
-  
-  DatabaseConnection() {
-    // connectionString will be initialized when first accessed
-  }
-  
-  String get connection {
-    connectionString ??= 'database://localhost:5432';
-    return connectionString;
+class Configuration {
+  // The initializer runs only the first time the field is accessed.
+  late final String apiEndpoint = _loadApiEndpoint();
+
+  String _loadApiEndpoint() {
+    print('Loading API endpoint from disk...');
+    return 'https://api.example.com/v1';
   }
 }
 
 void main() {
-  var db = DatabaseConnection();
-  print('Database created');
-  print('Connection: ${db.connection}'); // Initialized here
+  final config = Configuration();
+  print('Configuration created');
+
+  // First access triggers the lazy initializer.
+  print('API endpoint: ${config.apiEndpoint}');
+
+  // Subsequent accesses reuse the cached value without recomputation.
+  print('Cached endpoint: ${config.apiEndpoint}');
 }
 ```
+
+[⬅ Previous](topic-1-2-your-first-program.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-2-2-built-in-data-types.md)

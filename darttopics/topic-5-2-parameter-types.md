@@ -1,5 +1,7 @@
 # Topic 5.2: Parameter Types
 
+[⬅ Previous](topic-5-1-function-basics.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-5-3-advanced-function-concepts.md)
+
     * [ ] Positional, named, optional, and required parameters
 
 #### Parameter Types in Dart
@@ -140,7 +142,7 @@ void processOrder(String orderId, String item, {required int quantity, String pr
   print('---');
 }
 
-void analyzeData(List<int> data, [String method = 'sum', {bool includeDetails = false}]) {
+void analyzeData(List<int> data, [String method = 'sum'], {bool includeDetails = false}) {
   print('Analyzing data: $data');
   print('Method: $method');
   
@@ -218,7 +220,7 @@ String makeApiCall(
   return result;
 }
 
-void startServer([int port = 8080, {String host = 'localhost', bool enableLogging = false}]) {
+void startServer([int port = 8080], {String host = 'localhost', bool enableLogging = false}) {
   print('Starting server...');
   print('  Host: $host');
   print('  Port: $port');
@@ -226,3 +228,7 @@ void startServer([int port = 8080, {String host = 'localhost', bool enableLoggin
   print('---');
 }
 ```
+
+### **Module 5: Functions (Reusable Code)**
+
+[⬅ Previous](topic-5-1-function-basics.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-5-3-advanced-function-concepts.md)

@@ -1,5 +1,7 @@
 # Topic 13.1: Writing Quality Code
 
+[⬅ Previous](topic-12-2-platform-interoperability.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-13-2-compilation-and-deployment.md)
+
     * [ ] Following the "Effective Dart" style and usage guides
 
 #### Effective Dart Guidelines
@@ -59,3 +61,26 @@ class User {
   }
 }
 ```
+
+#### Enforce Style with Lints
+
+```yaml
+# analysis_options.yaml
+include: package:lints/recommended.yaml
+
+linter:
+  rules:
+    # Encourage consistent naming and formatting
+    camel_case_types: true
+    prefer_single_quotes: true
+    always_declare_return_types: true
+
+analyzer:
+  errors:
+    missing_return: warning
+    avoid_print: ignore
+```
+
+### **Module 13: Best Practices & Next Steps**
+
+[⬅ Previous](topic-12-2-platform-interoperability.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-13-2-compilation-and-deployment.md)

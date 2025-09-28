@@ -1,5 +1,7 @@
 # Topic 6.3: Inheritance
 
+[⬅ Previous](topic-6-2-constructors.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-7-1-advanced-blueprints.md)
+
     * [ ] Extending classes with `extends`, using `super`, and `@override`
 
 #### Inheritance with extends, super, and @override
@@ -130,7 +132,7 @@ class Vehicle {
     print('$brand $model is now going ${speed.toStringAsFixed(1)} km/h');
   }
   
-  virtual void displaySpeedLimit() {
+  void displaySpeedLimit() {
     print('General speed limit applies');
   }
   
@@ -366,3 +368,5 @@ void main() {
 ```
 
 ### **Module 7: Object-Oriented Programming (OOP) - Part 2**
+
+[⬅ Previous](topic-6-2-constructors.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-7-1-advanced-blueprints.md)

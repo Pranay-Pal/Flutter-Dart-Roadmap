@@ -1,5 +1,7 @@
 # Topic 13.3: Where to Go Next
 
+[⬅ Previous](topic-13-2-compilation-and-deployment.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](../The Definitive Dart Learning Roadmap.md)
+
     * [ ] Applying Dart skills to build applications with **Flutter**
 
 #### Next Steps with Flutter
@@ -39,7 +41,7 @@ class _UserListScreenState extends State<UserListScreen> {
   Future<void> loadUsers() async {
     try {
       // Using the concepts learned in previous modules
-      final repository = UserRepository(HttpClient());
+      final repository = UserRepository();
       final fetchedUsers = await repository.fetchAllUsers();
       
       setState(() {
@@ -74,9 +76,35 @@ class _UserListScreenState extends State<UserListScreen> {
   }
 }
 
+class UserRepository {
+  Future<List<User>> fetchAllUsers() async {
+    await Future.delayed(const Duration(seconds: 1));
+    return const [
+      User(name: 'Alice', email: 'alice@example.com'),
+      User(name: 'Bob', email: 'bob@example.com'),
+      User(name: 'Charlie', email: 'charlie@example.com'),
+    ];
+  }
+}
+
+class User {
+  final String name;
+  final String email;
+
+  const User({required this.name, required this.email});
+}
+
 void main() {
   runApp(MyApp());
 }
 ```
 
----
+#### Continue Your Journey
+
+- Explore the Flutter roadmap to master widgets, state management, and platform integration.
+- Contribute to open-source Dart packages to sharpen collaboration and code quality habits.
+- Experiment with backend frameworks like Dart Frog or Shelf to expand into server-side development.
+
+### **You're Ready for What's Next!**
+
+[⬅ Previous](topic-13-2-compilation-and-deployment.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](../The Definitive Dart Learning Roadmap.md)

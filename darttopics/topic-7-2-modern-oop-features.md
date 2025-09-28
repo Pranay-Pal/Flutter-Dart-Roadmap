@@ -1,5 +1,7 @@
 # Topic 7.2: Modern OOP Features
 
+[⬅ Previous](topic-7-1-advanced-blueprints.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-8-1-core-concepts.md)
+
     * [ ] Enhanced `enums`
     * [ ] Class modifiers (`interface`, `base`, `final`, `sealed`)
     * [ ] Adding functionality with `extension` methods
@@ -142,3 +144,5 @@ void main() {
 ```
 
 ### **Module 8: Asynchronous Programming**
+
+[⬅ Previous](topic-7-1-advanced-blueprints.md) · [🏠 Roadmap](../The Definitive Dart Learning Roadmap.md) · [Next ➡](topic-8-1-core-concepts.md)
